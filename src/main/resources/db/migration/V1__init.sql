@@ -5,6 +5,7 @@ create table IF NOT EXISTS users (
     password                varchar(80) not null,
     email                   varchar(80) unique,
     shelter_id              bigint null,
+    prifile_id              bigint references users (id),
     created_at              timestamp default current_timestamp,
     updated_at              timestamp default current_timestamp
 );
@@ -55,4 +56,26 @@ create table IF NOT EXISTS users_events (
    event_id                bigint not null references events (id),
    primary key (user_id, event_id)
 );
+
+create table IF NOT EXISTS images (
+    id      bigserial  primary key,
+    name    varchar(100),
+    comm    text,
+    image   bytea
+)
+
+create table IF NOT EXISTS users_images (
+    user_id                 bigint not null references users (id),
+    image_id                bigint not null references images (id),
+    primary key (user_id, image_id)
+)
+
+create table IF NOT EXISTS profile (
+    id  bigserial       primary key,
+    user_id             bigint not null references users (id),
+    firstname           varchar(80) not null,
+    lastname            varchar(80) not null,
+    image               bigint references images (id),
+    comm                text
+)
 
