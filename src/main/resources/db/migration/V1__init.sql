@@ -48,23 +48,29 @@ create table IF NOT EXISTS shelters
     updated_at timestamp default current_timestamp
 );
 
+drop table IF EXISTS events;
+
 create table IF NOT EXISTS events
 (
-    id          bigserial  primary key,
+    id          bigint  primary key,
     name        varchar(100),
     comm        varchar(300),
     status      int,
     start_date  timestamp,
     count_days  int,
-    created_at              timestamp default current_timestamp,
-    updated_at              timestamp default current_timestamp
+    created_at  timestamp default current_timestamp,
+    updated_at  timestamp default current_timestamp
 );
+
+drop table IF EXISTS users_events;
 
 create table IF NOT EXISTS users_events (
    user_id                 bigint not null references users (id),
    event_id                bigint not null references events (id),
    primary key (user_id, event_id)
 );
+
+drop table IF EXISTS images;
 
 create table IF NOT EXISTS images (
     id      bigint  primary key,
@@ -73,11 +79,15 @@ create table IF NOT EXISTS images (
     image   varchar(300)
 );
 
+drop table IF EXISTS users_images;
+
 create table IF NOT EXISTS users_images (
     user_id                 bigint not null references users (id),
     image_id                bigint not null references images (id),
     primary key (user_id, image_id)
 );
+
+drop table IF EXISTS profile;
 
 create table IF NOT EXISTS profile (
    id                  bigint primary key,
