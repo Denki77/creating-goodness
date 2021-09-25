@@ -2,24 +2,13 @@ Vue.component('modal-registration', {
     props: [],
 
     data() {
-        let options = [], waitBackEnd = true;
-        axios
-            .get('/api/v1/attribute/get_me_roles', this.form)
-            .then(function (response) {
-                options = response.data;
-                waitBackEnd = false;
-                console.log(options);
-            });
-
-
-        console.log(options);
         return {
             body: document.getElementsByTagName('body').item(0),
             isActive: false,
             isLoading: false,
             succedeed: false,
 
-            options: options,
+            options: null,
 
             form: {
                 role: null,
@@ -31,6 +20,11 @@ Vue.component('modal-registration', {
             }
         }
     },
+    mounted() {
+        axios
+            .get('/api/v1/attribute/get_me_roles')
+            .then(response => (this.options = response.data));
+    },
 
     created() {
 
@@ -39,13 +33,12 @@ Vue.component('modal-registration', {
     methods: {
         show() {
             this.isActive = !this.isActive
-            // if(this.isActive) $('.form-select').select2();
         },
 
         reg() {
             let vm = this
             vm.isLoading = true
-            axios.post('/api/v1/auth/register', this.form).then(function (response) {
+            axios.post('/api/v1/user/register', this.form).then(function (response) {
 
 
             }).catch(function (error) {
@@ -73,8 +66,8 @@ Vue.component('modal-registration', {
         '\t\t\t\t<div class="col">\n' +
         '            \t\t<select class="form-select" v-model="form.role">\n' +
         '            \t\t\t<option></option>\n' +
-        '            \t\t\t<option v-for="option in options" v-bind:value="option.value">\n' +
-        '    \t\t\t\t\t\t{{ option.text }}\n' +
+        '            \t\t\t<option v-for="option in options" v-bind:value="option.code">\n' +
+        '    \t\t\t\t\t\t{{ option.name }}\n' +
         '  \t\t\t\t\t\t</option>\n' +
         '                    </select>\n' +
         '                </div>\n' +
@@ -92,7 +85,7 @@ Vue.component('modal-registration', {
         '\t\t\t\t</div>\n' +
         '            </div>\n' +
         '            <div class="form-group mb-3 row">\n' +
-        '\t\t\t\t<label class="form-label col-3 col-form-label">Школа</label>\n' +
+        '\t\t\t\t<label class="form-label col-3 col-form-label"># Детского дома</label>\n' +
         '\t\t\t\t<div class="col">\n' +
         '\t\t\t\t\t<input type="text" class="form-control mb-2" v-model="form.shelter" placeholder="18">\n' +
         '\t\t\t\t</div>\n' +
