@@ -2,7 +2,7 @@ drop table IF EXISTS users;
 
 create table IF NOT EXISTS users
 (
-    id         bigint primary key,
+    id         bigint primary key auto_increment,
     username   varchar(80) not null,
     password   varchar(80) not null,
     email      varchar(80) unique,
@@ -15,7 +15,7 @@ drop table IF EXISTS roles;
 
 create table IF NOT EXISTS roles
 (
-    id         bigint primary key,
+    id         bigint primary key auto_increment,
     name       varchar(80) unique,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
@@ -34,7 +34,7 @@ drop table IF EXISTS cities;
 
 create table IF NOT EXISTS cities
 (
-    id   bigint primary key,
+    id   bigint primary key auto_increment,
     name varchar(80) null,
     lat  varchar(80) null,
     lng  varchar(80) null
@@ -44,7 +44,7 @@ drop table IF EXISTS shelters;
 
 create table IF NOT EXISTS shelters
 (
-    id         bigint primary key,
+    id         bigint primary key auto_increment,
     name       varchar(80) null,
     number     bigint,
     city_id    bigint,
@@ -56,7 +56,7 @@ drop table IF EXISTS events;
 
 create table IF NOT EXISTS events
 (
-    id         bigint primary key,
+    id         bigint primary key auto_increment,
     name       varchar(100),
     comm       varchar(300),
     status     int,
@@ -79,7 +79,7 @@ drop table IF EXISTS images;
 
 create table IF NOT EXISTS images
 (
-    id    bigint primary key,
+    id    bigint primary key auto_increment,
     name  varchar(100),
     comm  text,
     image varchar(300)
@@ -98,7 +98,7 @@ drop table IF EXISTS profile;
 
 create table IF NOT EXISTS profile
 (
-    id        bigint primary key,
+    id        bigint primary key auto_increment,
     user_id   bigint      not null references users (id),
     firstname varchar(80) not null,
     lastname  varchar(80) not null,
@@ -110,7 +110,7 @@ drop table IF EXISTS dreams;
 
 create table IF NOT EXISTS dreams
 (
-    id          bigint primary key,
+    id          bigint primary key auto_increment,
     description varchar,
     annotation  varchar,
     user_id     bigint not null references users (id),
@@ -122,7 +122,7 @@ drop table IF EXISTS tags;
 
 create table IF NOT EXISTS tags
 (
-    id   bigint primary key,
+    id   bigint primary key auto_increment,
     name varchar(100)
 );
 

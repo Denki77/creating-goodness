@@ -18,6 +18,17 @@ public class AuthenticationController {
     }
 
 
+    @PostMapping("/register")
+    public void register () {
+        System.out.println("");
+    }
+
+
+
+
+
+
+
 
 
 
