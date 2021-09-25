@@ -39,7 +39,7 @@ public class User {
     @OneToMany
     @JoinTable(name = "dreams",
             joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
+            inverseJoinColumns = @JoinColumn(name = "dreams.id"))
     private List<Dream> dream;
 
     @CreationTimestamp

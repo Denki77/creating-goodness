@@ -26,7 +26,7 @@ public class Dream {
 
     @ManyToOne
     @JoinTable(name = "users",
-            joinColumns = @JoinColumn(name = "id"),
+            joinColumns = @JoinColumn(name = "dreams.id"),
             inverseJoinColumns = @JoinColumn(name = "id"))
     private User user;
 

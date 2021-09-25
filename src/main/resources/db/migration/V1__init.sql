@@ -6,8 +6,7 @@ create table IF NOT EXISTS users
     username   varchar(80) not null,
     password   varchar(80) not null,
     email      varchar(80) unique,
-    shelter_id bigint      null,
-    profile_id bigint references profile (id),
+    shelter_id bigint    default 0,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
