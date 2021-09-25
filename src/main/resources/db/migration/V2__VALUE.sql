@@ -32,16 +32,35 @@ values
        ('Спорт'),
        ('Музыка'),
        ('Кино'),
-       ('Театр'),
-       ('Спорт');
+       ('Театр');
 
-
-insert into tags (name)
+insert into users (username, password, email, shelter_id)
 values
-    ('Спорт'),
-    ('Музыка'),
-    ('Кино'),
-    ('Театр'),
-    ('Спорт');
+        ('user1', 'pass1', 'user1@mail.ru', 1),
+        ('user2', 'pass2', 'user2@mail.ru', 1);
 
+insert into profile (user_id, firstname, lastname, comment)
+values
+        (1, 'Иван', 'Иванов', 'Вот такой вот персонаж'),
+        (2, 'Петров', 'Петр', 'Всем привет');
+
+insert into dreams (description, annotation, user_id)
+values
+        ('Хочу попасть на матч', 'Хочу попасть на матч', 1),
+        ('Хочу попасть на концерт', 'Хочу попасть на концерт Metallica', 2);
+
+insert into dreams_tags (dream_id, tag_id)
+values
+       (1,1),
+       (2,2);
+
+insert into users_tags (user_id, tag_id)
+values
+        (1,1),
+        (2,2);
+
+insert into users_events (user_id, event_id)
+values
+        (1,1),
+        (2,2);
 
