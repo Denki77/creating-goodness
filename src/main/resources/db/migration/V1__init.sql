@@ -98,3 +98,29 @@ create table IF NOT EXISTS profile (
    comm                text
 );
 
+drop table IF EXISTS dreams;
+
+create table IF NOT EXISTS dreams (
+    id              bigint primary key,
+    description     varchar,
+    annotation      varchar,
+    user_id         bigint not null references users (id),
+    created_at      timestamp default current_timestamp,
+    updated_at      timestamp default current_timestamp
+);
+
+drop table IF EXISTS tags;
+
+create table IF NOT EXISTS tags (
+    id              bigint primary key,
+    name            varchar(100)
+)
+
+drop table IF EXISTS dreams_tags;
+
+create table IF NOT EXISTS dreams_tags (
+    dream_id              bigint not null references dreams (id),
+    tag_id                bigint not null references tags (id),
+    primary key (dream_id, tag_id)
+)
+
