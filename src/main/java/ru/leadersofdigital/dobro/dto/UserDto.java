@@ -1,7 +1,7 @@
 package ru.leadersofdigital.dobro.dto;
 
 import lombok.Data;
-import ru.leadersofdigital.dobro.entity.User;
+import ru.leadersofdigital.dobro.models.User;
 
 @Data
 public class UserDto {
