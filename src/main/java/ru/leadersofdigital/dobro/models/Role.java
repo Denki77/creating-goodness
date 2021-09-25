@@ -32,4 +32,13 @@ public class Role {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public Role () {}
+
+    public Role (Long id) {
+        this.id = id;
+    }
+
+
+
 }

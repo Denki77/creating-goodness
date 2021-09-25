@@ -22,4 +22,12 @@ public class City extends AttributeObject {
 
     @Column(name = "lng")
     private String lng;
+
+
+    public City () {}
+
+    public City (Long id) {
+        this.id = id;
+    }
+
 }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "shelters")
-public class Shelter {
+public class Shelter extends AttributeObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,4 +34,14 @@ public class Shelter {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+
+    public Shelter () {}
+    public Shelter (Long id) {
+        this.id = id;
+    }
+
+
+
+
 }
