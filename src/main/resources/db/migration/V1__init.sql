@@ -135,3 +135,11 @@ create table IF NOT EXISTS dreams_tags
     primary key (dream_id, tag_id)
 );
 
+drop table IF EXISTS users_tags;
+
+create table IF NOT EXISTS users_tags (
+    user_id  bigint not null references users (id),
+    tag_id   bigint not null references tags (id),
+    primary key (user_id, tag_id)
+)
+
