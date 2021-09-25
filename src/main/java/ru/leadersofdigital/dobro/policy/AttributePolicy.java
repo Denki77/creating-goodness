@@ -21,9 +21,9 @@ public class AttributePolicy {
         return cityService.findAll(q).stream().map(AttributeDto::new).collect(Collectors.toList());
     }
 
-    /*public List<AttributeDto> getShelters (String q) {
+    public List<AttributeDto> getShelters (String q) {
         return shelterService.findAll(q).stream().map(AttributeDto::new).collect(Collectors.toList());
-    }*/
+    }
 
 
 

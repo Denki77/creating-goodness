@@ -1,3 +1,6 @@
+
+
+
 Vue.component('modal-registration', {
     props: [],
 
@@ -9,8 +12,12 @@ Vue.component('modal-registration', {
           succedeed: false,
           classError: 'is-invalid',
 
-
-          options: null,
+          options: [
+              { text: 'Воспитанник детского дома', value: '1' },
+              { text: 'Официальный представитель детского дома', value: '2' },
+              { text: 'Волонтё', value: '3' },
+              { text: 'Представитель бизнеса', value: '4' },
+          ],
 
           invalid: {
               role: false,
@@ -31,20 +38,18 @@ Vue.component('modal-registration', {
           }
       }
     },
-    mounted() {
-        axios
-            .get('/api/v1/attribute/get_me_roles')
-            .then(response => (this.options = response.data));
-    },
 
     created() {
 
     },
 
-    methods: {
+
+
+
+    methods : {
         show() {
             this.isActive = !this.isActive
-            if (!this.isActive) return
+            if(!this.isActive) return
             let selects2 = this.body.getElementsByClassName("s2")
             for (let i = 0; i < selects2.length; i++) {
                 this.initS2(selects2[i])
@@ -86,16 +91,17 @@ Vue.component('modal-registration', {
         },
 
 
-        reg() {
+        reg () {
             let vm = this
             vm.isLoading = true
-            axios.post('/api/v1/auth/register', this.form).then(function (response) {
+            axios.post('/api/v1/auth/register', this.form).then(function(response) {
                 localStorage.token = response.data;
                 vm.succedeed = true
-            }).catch(function (error) {
-                if (error.response) vm.handlerErrors(error.response.data.messages)
-            }).finally(function () {
-                setTimeout(function () {
+                vm.$emit('callback', true)
+            }).catch(function (error){
+                if(error.response ) vm.handlerErrors(error.response.data.messages)
+            }).finally(function (){
+                setTimeout(function (){
                     vm.isLoading = false
                 }, 1000);
             })
@@ -117,8 +123,8 @@ Vue.component('modal-registration', {
         '\t\t\t\t<div class="col">\n' +
         '            \t\t<select class="form-select" v-bind:class="{ \'is-invalid\' : invalid.role}"  v-model="form.role">\n' +
         '            \t\t\t<option></option>\n' +
-        '            \t\t\t<option v-for="option in options"  v-bind:value="option.code">\n' +
-        '    \t\t\t\t\t\t{{ option.name }}\n' +
+        '            \t\t\t<option v-for="option in options"  v-bind:value="option.value">\n' +
+        '    \t\t\t\t\t\t{{ option.text }}\n' +
         '  \t\t\t\t\t\t</option>\n' +
         '                    </select>\n' +
         '                </div>\n' +
@@ -136,7 +142,7 @@ Vue.component('modal-registration', {
         '\t\t\t\t</div>\n' +
         '            </div>\n' +
         '            <div class="form-group mb-3 row">\n' +
-        '\t\t\t\t<label class="form-label col-3 col-form-label"># Детского дома</label>\n' +
+        '\t\t\t\t<label class="form-label col-3 col-form-label">Школа</label>\n' +
         '\t\t\t\t<div class="col">\n' +
         '\t\t\t\t\t<select class="form-select mb-2 s2" attribute="shelter" v-bind:class="{ \'is-invalid\' : invalid.shelter}" v-model="form.shelter" placeholder="18"></select>\n' +
         '\t\t\t\t</div>\n' +
@@ -174,15 +180,31 @@ Vue.component('modal-registration', {
 })
 
 
+
 var app = new Vue({
     el: '#app',
     methods : {
         showRegistration () {
             this.$refs.reg.show();
+        },
+
+        isReg(bool) {
+            this.isAuth = bool
         }
     },
 
+
+    computed: {
+        token() {
+            if (localStorage.getItem("token") != null) return true
+            return this.isAuth;
+        }
+    },
+
+
+
     data: {
+        isAuth: false,
         message: 'Привет, Vue!'
     }
 })

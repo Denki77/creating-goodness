@@ -24,10 +24,10 @@ public class AttributeController {
         return attributePolicy.getCities(q);
     }
 
-    /*@GetMapping("/shelter")
+    @GetMapping("/shelter")
     public List<AttributeDto> findShelter(@RequestParam(name = "q", defaultValue = "") String q) {
         return attributePolicy.getShelters(q);
-    }*/
+    }
 
 //    @GetMapping("/get_me_roles")
 //    public List<Role> get_me_roles() {
