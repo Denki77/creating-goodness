@@ -47,4 +47,21 @@ create table IF NOT EXISTS shelters
     updated_at timestamp default current_timestamp
 );
 
+create table IF NOT EXISTS events
+(
+    id          bigserial  primary key,
+    name        varchar(100),
+    comm        varchar(300),
+    status      int,
+    start_date  timestamp,
+    count_days  int,
+    created_at              timestamp default current_timestamp,
+    updated_at              timestamp default current_timestamp
+);
+
+create table IF NOT EXISTS users_events (
+   user_id                 bigint not null references users (id),
+   event_id                bigint not null references events (id),
+   primary key (user_id, event_id)
+);
 
