@@ -70,7 +70,7 @@ create table IF NOT EXISTS images (
     id      bigint  primary key,
     name    varchar(100),
     comm    text,
-    image   bytea
+    image   varchar(300)
 );
 
 create table IF NOT EXISTS users_images (
