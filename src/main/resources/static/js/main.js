@@ -4,7 +4,7 @@ Vue.component('modal-registration', {
     data() {
         let options = [], waitBackEnd = true;
         axios
-            .get('/api/v1/auth/get_me_roles', this.form)
+            .get('/api/v1/attribute/get_me_roles', this.form)
             .then(function (response) {
                 options = response.data;
                 waitBackEnd = false;
