@@ -1,55 +1,57 @@
-
-
-
 Vue.component('modal-registration', {
     props: [],
 
     data() {
-      return {
-          body: document.getElementsByTagName('body').item(0),
-          isActive: false,
-          isLoading: false,
-          succedeed: false,
-
-          options: [
-              { text: 'Воспитанник детского дома', value: '1' },
-              { text: 'Официальный представитель детского дома', value: '2' },
-              { text: 'Волонтё', value: '3' },
-              { text: 'Представитель бизнеса', value: '4' },
-          ],
+        let options = [], waitBackEnd = true;
+        axios
+            .get('/api/v1/auth/get_me_roles', this.form)
+            .then(function (response) {
+                options = response.data;
+                waitBackEnd = false;
+                console.log(options);
+            });
 
 
-          form: {
-              role: null,
-              username: null,
-              email: null,
-              shelter: null,
-              city: null,
-              password: null
-          }
-      }
+        console.log(options);
+        return {
+            body: document.getElementsByTagName('body').item(0),
+            isActive: false,
+            isLoading: false,
+            succedeed: false,
+
+            options: options,
+
+            form: {
+                role: null,
+                username: null,
+                email: null,
+                shelter: null,
+                city: null,
+                password: null
+            }
+        }
     },
 
     created() {
 
     },
 
-    methods : {
+    methods: {
         show() {
             this.isActive = !this.isActive
             // if(this.isActive) $('.form-select').select2();
         },
 
-        reg () {
+        reg() {
             let vm = this
             vm.isLoading = true
-            axios.post('/api/v1/auth/register', this.form).then(function(response) {
+            axios.post('/api/v1/auth/register', this.form).then(function (response) {
 
 
-            }).catch(function (error){
+            }).catch(function (error) {
 
-            }).finally(function (){
-                setTimeout(function (){
+            }).finally(function () {
+                setTimeout(function () {
                     vm.isLoading = false
                 }, 1000);
             })
@@ -128,11 +130,10 @@ Vue.component('modal-registration', {
 })
 
 
-
 var app = new Vue({
     el: '#app',
-    methods : {
-        showRegistration () {
+    methods: {
+        showRegistration() {
             this.$refs.reg.show();
         }
     },

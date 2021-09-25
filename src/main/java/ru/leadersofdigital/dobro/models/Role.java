@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "roles")
-public class Role  {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -18,6 +18,12 @@ public class Role  {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "code")
+    private String code;
+
+    @Column(name = "status")
+    private Integer status;
 
     @CreationTimestamp
     @Column(name = "created_at")

@@ -1,6 +1,6 @@
-drop table IF EXISTS users;
+DROP TABLE IF EXISTS users;
 
-create table IF NOT EXISTS users
+CREATE TABLE IF NOT EXISTS users
 (
     id         bigint primary key auto_increment,
     username   varchar(80) not null,
@@ -11,28 +11,36 @@ create table IF NOT EXISTS users
     updated_at timestamp default current_timestamp
 );
 
-drop table IF EXISTS roles;
-
-create table IF NOT EXISTS roles
+// users roles
+DROP TABLE IF EXISTS roles;
+CREATE TABLE IF NOT EXISTS roles
 (
     id         bigint primary key auto_increment,
+    code       varchar(80) unique,
     name       varchar(80) unique,
+    status     int       default 1,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
+INSERT INTO roles (code, name)
+VALUES ('admin', 'Администратор'),
+       ('sponsor', 'Спонсор'),
+       ('volunteer', 'Волонтёр'),
+       ('orphanage', 'Официальный представитель детского дома'),
+       ('pupil', 'Воспитанник');
 
-drop table IF EXISTS users_roles;
+DROP TABLE IF EXISTS users_roles;
 
-create table IF NOT EXISTS users_roles
+CREATE TABLE IF NOT EXISTS users_roles
 (
     user_id bigint not null references users (id),
     role_id bigint not null references roles (id),
     primary key (user_id, role_id)
 );
 
-drop table IF EXISTS cities;
+DROP TABLE IF EXISTS cities;
 
-create table IF NOT EXISTS cities
+CREATE TABLE IF NOT EXISTS cities
 (
     id   bigint primary key auto_increment,
     name varchar(80) null,
@@ -40,9 +48,9 @@ create table IF NOT EXISTS cities
     lng  varchar(80) null
 );
 
-drop table IF EXISTS shelters;
+DROP TABLE IF EXISTS shelters;
 
-create table IF NOT EXISTS shelters
+CREATE TABLE IF NOT EXISTS shelters
 (
     id         bigint primary key auto_increment,
     name       varchar(80) null,
@@ -52,9 +60,9 @@ create table IF NOT EXISTS shelters
     updated_at timestamp default current_timestamp
 );
 
-drop table IF EXISTS events;
+DROP TABLE IF EXISTS events;
 
-create table IF NOT EXISTS events
+CREATE TABLE IF NOT EXISTS events
 (
     id         bigint primary key auto_increment,
     name       varchar(100),
@@ -66,18 +74,18 @@ create table IF NOT EXISTS events
     updated_at timestamp default current_timestamp
 );
 
-drop table IF EXISTS users_events;
+DROP TABLE IF EXISTS users_events;
 
-create table IF NOT EXISTS users_events
+CREATE TABLE IF NOT EXISTS users_events
 (
     user_id  bigint not null references users (id),
     event_id bigint not null references events (id),
     primary key (user_id, event_id)
 );
 
-drop table IF EXISTS images;
+DROP TABLE IF EXISTS images;
 
-create table IF NOT EXISTS images
+CREATE TABLE IF NOT EXISTS images
 (
     id    bigint primary key auto_increment,
     name  varchar(100),
@@ -85,18 +93,18 @@ create table IF NOT EXISTS images
     image varchar(300)
 );
 
-drop table IF EXISTS users_images;
+DROP TABLE IF EXISTS users_images;
 
-create table IF NOT EXISTS users_images
+CREATE TABLE IF NOT EXISTS users_images
 (
     user_id  bigint not null references users (id),
     image_id bigint not null references images (id),
     primary key (user_id, image_id)
 );
 
-drop table IF EXISTS profile;
+DROP TABLE IF EXISTS profile;
 
-create table IF NOT EXISTS profile
+CREATE TABLE IF NOT EXISTS profile
 (
     id        bigint primary key auto_increment,
     user_id   bigint      not null references users (id),
@@ -106,9 +114,9 @@ create table IF NOT EXISTS profile
     comment   text
 );
 
-drop table IF EXISTS dreams;
+DROP TABLE IF EXISTS dreams;
 
-create table IF NOT EXISTS dreams
+CREATE TABLE IF NOT EXISTS dreams
 (
     id          bigint primary key auto_increment,
     description varchar,
@@ -118,28 +126,29 @@ create table IF NOT EXISTS dreams
     updated_at  timestamp default current_timestamp
 );
 
-drop table IF EXISTS tags;
+DROP TABLE IF EXISTS tags;
 
-create table IF NOT EXISTS tags
+CREATE TABLE IF NOT EXISTS tags
 (
     id   bigint primary key auto_increment,
     name varchar(100)
 );
 
-drop table IF EXISTS dreams_tags;
+DROP TABLE IF EXISTS dreams_tags;
 
-create table IF NOT EXISTS dreams_tags
+CREATE TABLE IF NOT EXISTS dreams_tags
 (
     dream_id bigint not null references dreams (id),
     tag_id   bigint not null references tags (id),
     primary key (dream_id, tag_id)
 );
 
-drop table IF EXISTS users_tags;
+DROP TABLE IF EXISTS users_tags;
 
-create table IF NOT EXISTS users_tags (
-    user_id  bigint not null references users (id),
-    tag_id   bigint not null references tags (id),
+CREATE TABLE IF NOT EXISTS users_tags
+(
+    user_id bigint not null references users (id),
+    tag_id  bigint not null references tags (id),
     primary key (user_id, tag_id)
 )
 
