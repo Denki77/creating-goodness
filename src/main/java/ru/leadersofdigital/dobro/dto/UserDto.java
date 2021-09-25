@@ -15,4 +15,5 @@ public class UserDto {
         this.username = username;
         this.email = email;
     }
+
 }
