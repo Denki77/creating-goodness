@@ -12,6 +12,8 @@
     <groupId>ru.leadersofdigital.dobro</groupId>
     <artifactId>Hakaton</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
     <properties>
         <java.version>11</java.version>
         <io.springfox.version>2.9.2</io.springfox.version>
@@ -49,7 +51,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -68,9 +69,17 @@
             <artifactId>hibernate-validator</artifactId>
             <version>6.1.5.Final</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.1</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>Hakaton</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -84,6 +93,13 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <!--plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>WEB-INF\web.xml</webXml>
+                </configuration>
+            </plugin-->
         </plugins>
     </build>
 </project>

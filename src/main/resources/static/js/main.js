@@ -13,10 +13,10 @@ Vue.component('modal-registration', {
           classError: 'is-invalid',
 
           options: [
-              { text: 'Воспитанник детского дома', value: '1' },
-              { text: 'Официальный представитель детского дома', value: '2' },
-              { text: 'Волонтё', value: '3' },
-              { text: 'Представитель бизнеса', value: '4' },
+              {text: 'Воспитанник детского дома', value: '1'},
+              {text: 'Официальный представитель детского дома', value: '2'},
+              {text: 'Волонтёр', value: '3'},
+              {text: 'Представитель бизнеса', value: '4'},
           ],
 
           invalid: {
@@ -38,15 +38,17 @@ Vue.component('modal-registration', {
           }
       }
     },
-
+    // mounted() {
+    //     axios
+    //         .get('/api/v1/attribute/get_me_roles')
+    //         .then(response => (this.options = response.data));
+    // },
     created() {
 
     },
 
 
-
-
-    methods : {
+    methods: {
         show() {
             this.isActive = !this.isActive
             if(!this.isActive) return

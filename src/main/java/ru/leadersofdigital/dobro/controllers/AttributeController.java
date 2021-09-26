@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.leadersofdigital.dobro.dtos.AttributeDto;
+import ru.leadersofdigital.dobro.models.Role;
 import ru.leadersofdigital.dobro.policy.AttributePolicy;
 import ru.leadersofdigital.dobro.services.RoleService;
 
@@ -29,9 +30,9 @@ public class AttributeController {
         return attributePolicy.getShelters(q);
     }
 
-//    @GetMapping("/get_me_roles")
-//    public List<Role> get_me_roles() {
-//        return roleService.getMeAllRoles();
-//    }
+    @GetMapping("/get_me_roles")
+    public List<Role> get_me_roles() {
+        return roleService.getMeAllRoles();
+    }
 
 }
