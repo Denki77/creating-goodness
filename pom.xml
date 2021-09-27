@@ -9,8 +9,8 @@
         <version>2.4.5</version>
         <relativePath/>
     </parent>
-    <groupId>ru.leadersofdigital.dobro</groupId>
-    <artifactId>Hakaton</artifactId>
+    <groupId>ru.leadersofdigital</groupId>
+    <artifactId>dobro</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -31,13 +31,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.26</version>
-        </dependency>
-
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
@@ -47,6 +40,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -93,13 +87,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <!--plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <webXml>WEB-INF\web.xml</webXml>
-                </configuration>
-            </plugin-->
         </plugins>
     </build>
 </project>
