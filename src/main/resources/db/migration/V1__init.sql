@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS events
     status     int,
     start_date timestamp,
     count_days int,
+    user_id    bigint not null references users (id),
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
