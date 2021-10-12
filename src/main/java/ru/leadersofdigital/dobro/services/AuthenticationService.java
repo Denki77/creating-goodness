@@ -2,14 +2,13 @@ package ru.leadersofdigital.dobro.services;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dtos.RegisterDto;
 import ru.leadersofdigital.dobro.error_handling.InvalidDataException;
-import ru.leadersofdigital.dobro.models.City;
-import ru.leadersofdigital.dobro.models.Role;
-import ru.leadersofdigital.dobro.models.Shelter;
-import ru.leadersofdigital.dobro.models.User;
+import ru.leadersofdigital.dobro.models.*;
+import ru.leadersofdigital.dobro.repositories.ProfileRepository;
 import ru.leadersofdigital.dobro.repositories.UserRepository;
 import ru.leadersofdigital.dobro.utils.JwtTokenUtil;
 
@@ -23,6 +22,9 @@ public class AuthenticationService {
     private final JwtTokenUtil tokenUtil;
     private final UserRepository userRepository;
     private final RoleService roleService;
+
+    @Autowired
+    private ProfileRepository profileRepository;
 
 
     public String registerUser (RegisterDto dto) {
@@ -40,6 +42,9 @@ public class AuthenticationService {
             user.setShelter(new Shelter(dto.getShelter()));
         }
         user = userRepository.save(user);
+        Profile profile = new Profile();
+        profile.setUser(user);
+        profileRepository.saveAndFlush(profile);
         return tokenUtil.generateToken(user);
     }
 

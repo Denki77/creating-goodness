@@ -109,8 +109,8 @@ CREATE TABLE IF NOT EXISTS profile
 (
     id        bigint primary key auto_increment,
     user_id   bigint      not null references users (id),
-    firstname varchar(80) not null,
-    lastname  varchar(80) not null,
+    firstname varchar(80) ,
+    lastname  varchar(80) ,
     image     bigint references images (id),
     comment   text
 );
