@@ -5,13 +5,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.leadersofdigital.dobro.dtos.LoginDto;
 import ru.leadersofdigital.dobro.dtos.RegisterDto;
+import ru.leadersofdigital.dobro.dtos.TokenDto;
 import ru.leadersofdigital.dobro.error_handling.InvalidDataException;
+import ru.leadersofdigital.dobro.error_handling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.*;
 import ru.leadersofdigital.dobro.repositories.ProfileRepository;
 import ru.leadersofdigital.dobro.repositories.UserRepository;
 import ru.leadersofdigital.dobro.utils.JwtTokenUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +30,16 @@ public class AuthenticationService {
     @Autowired
     private ProfileRepository profileRepository;
 
+
+    public String authorization (LoginDto dto) {
+        User user = userRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new ResourceNotFoundException("Email not found"));
+
+        if (!cryptPasswordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new InvalidDataException(Arrays.asList("Invalid data password or email"));
+        }
+
+        return tokenUtil.generateToken(user);
+    }
 
     public String registerUser (RegisterDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {

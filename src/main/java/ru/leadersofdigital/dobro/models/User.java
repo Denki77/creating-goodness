@@ -30,7 +30,6 @@ public class User {
     @JoinColumn(name = "shelter_id")
     private Shelter shelter;
 
-
     @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
