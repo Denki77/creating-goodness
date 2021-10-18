@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS roles
     updated_at timestamp default current_timestamp
 );
 INSERT INTO roles (code, name)
-VALUES ('admin', 'Администратор'),
+VALUES ('ROLE_ADMIN', 'Администратор'),
        ('sponsor', 'Спонсор'),
        ('volunteer', 'Волонтёр'),
        ('orphanage', 'Официальный представитель детского дома'),

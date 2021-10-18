@@ -9,4 +9,7 @@ import ru.leadersofdigital.dobro.models.Profile;
 public interface ProfileRepository extends JpaRepository<Profile, Long> {
     @Query(value = "select p from Profile p where p.user.id = :userId")
     Profile getByUserId(Long userId);
+
+    @Query(value = "select p from Profile p where p.user.email = :userEmail")
+    Profile getByEmail(String userEmail);
 }

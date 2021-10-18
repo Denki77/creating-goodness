@@ -12,7 +12,7 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -21,6 +21,7 @@
         .show {
             display: block;
         }
+
         .select2-container--open {
             z-index: 9999999;
         }
@@ -48,167 +49,215 @@
 
 <body>
 <div id="app">
-<div class="container">
-    <header class="blog-header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-            <div class="col-4 pt-1">
-                <a class="link-secondary" v-if="!token" v-on:click="showRegistration" href="#">Регистрация</a>
-            </div>
-            <div class="col-4 text-center">
-                <a class="blog-header-logo text-dark" href="#">Здесь сбываются мечты</a>
-            </div>
-            <div class="col-4 d-flex justify-content-end align-items-center">
-                <a class="link-secondary" href="#" aria-label="Search">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"
-                         viewbox="0 0 24 24"><title>Поиск</title>
-                        <circle cx="10.5" cy="10.5" r="7.5"></circle>
-                        <path d="M21 21l-5.2-5.2"></path>
-                    </svg>
-                </a>
-                <a class="btn btn-sm btn-outline-secondary" href="/login">Войти</a>
-            </div>
-        </div>
-    </header>
-
-    <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-            <a class="p-2 link-secondary" href="#">Мечта</a>
-            <a class="p-2 link-secondary" href="#">Курсы</a>
-            <a class="p-2 link-secondary" href="#">Игры</a>
-            <a class="p-2 link-secondary" href="#">Выпускники</a>
-            <a class="p-2 link-secondary" href="#">Помощь</a>
-            <a class="p-2 link-secondary" href="#">Советы</a>
-            <a class="p-2 link-secondary" href="#">Политика</a>
-            <a class="p-2 link-secondary" href="#">Контакты</a>
-        </nav>
-    </div>
-
-    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
-        <div class="col-md-6 px-0">
-            <h1 class="display-4 font-italic">Нет ничего невозможного</h1>
-            <p class="lead my-3">Оставь заявку и о ней узнают тысячи спонсоров, волонтёров, тех, кто способен сделать
-                тебя счастливее.</p>
-            <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Рассказать о мечте...</a></p>
-        </div>
-    </div>
-
-    <div class="row mb-2">
-        <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-success">Скоро</strong>
-                    <h3 class="mb-0">Хочу играть в футбол</h3>
-                    <div class="mb-1 text-muted">12 ноября</div>
-                    <p class="card-text mb-auto">Мы получили много заявок от воспитанников ДД №8 и организовали для них
-                        приезд Романа.</p>
-                    <a href="#" class="stretched-link">Продолжить чтение</a>
+    <div class="container">
+        <header class="blog-header py-3">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 pt-1">
+                    <a class="link-secondary" v-if="!token" v-on:click="showRegistration" href="#">Регистрация</a>
+                    <a id="profileLink" class="link-secondary" v-if="token" href="#" onclick="onProfileLinkClick()">Личный
+                        кабинет</a>
                 </div>
-                <div class="col-auto d-none d-lg-block"
-                     style='background-image: url("upload_images/events/shirokov.jpg");
-                     width: 200px;
-                     background-size: cover;'>
-
+                <div class="col-4 text-center">
+                    <a class="blog-header-logo text-dark" href="#">Здесь сбываются мечты</a>
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <a class="link-secondary" href="#" aria-label="Search">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"
+                             viewbox="0 0 24 24"><title>Поиск</title>
+                            <circle cx="10.5" cy="10.5" r="7.5"></circle>
+                            <path d="M21 21l-5.2-5.2"></path>
+                        </svg>
+                    </a>
+                    <a class="btn btn-sm btn-outline-secondary" href="#"
+                       onclick="document.getElementById('id01').style.display='block'">Войти</a>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-danger">Сбор заявок</strong>
-                    <h3 class="mb-0">Дотянуться до звезды</h3>
-                    <div class="mb-1 text-muted">ДД № 15</div>
-                    <p class="mb-auto">Воспитанники детского дома №15 хотят пригласить звезду на день рождение своего ДД
-                        - Моргенште́рна.</p>
-                    <a href="#" class="stretched-link">Продолжить чтение</a>
-                </div>
-                <div class="col-auto d-none d-lg-block"
-                     style='background-image: url("upload_images/events/mong.jpg");
-                     width: 200px;
-                     background-size: cover;'>
+        </header>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-</div>
-<main class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <h3 class="pb-4 mb-4 font-italic border-bottom">
-                Лента заявок
-            </h3>
-
-            <div class="blog-post">
-                <h2 class="blog-post-title">Дотянуться до звезды</h2>
-                <p class="blog-post-meta">ДД № 15 <a href="#">1000 голосов</a></p>
-
-                <p>Воспитанники детского дома №15 хотят пригласить звезду на день рождение своего ДД -
-                    Моргенште́рна.</p>
-                <hr>
-                <p>Много хорошего текста.</p>
-                <blockquote>
-                    <p>Мы сделаем это!</p>
-                </blockquote>
-
-            </div><!-- /.blog-post -->
-
-
-            <nav class="blog-pagination">
-                <a class="btn btn-outline-primary" href="#">Предыдущие</a>
-                <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Следующие</a>
+        <div class="nav-scroller py-1 mb-2">
+            <nav class="nav d-flex justify-content-between">
+                <a class="p-2 link-secondary main-nav" href="#">Главная</a>
+                <a class="p-2 link-secondary" href="#">Мечта</a>
+                <a class="p-2 link-secondary" href="#">Курсы</a>
+                <a class="p-2 link-secondary" href="#">Игры</a>
+                <a class="p-2 link-secondary" href="#">Выпускники</a>
+                <a class="p-2 link-secondary" href="#">Помощь</a>
+                <a class="p-2 link-secondary" href="#">Советы</a>
+                <a class="p-2 link-secondary" href="#">Политика</a>
+                <a class="p-2 link-secondary" href="#">Контакты</a>
             </nav>
-
         </div>
 
-        <aside class="col-md-4">
-            <div class="p-4 mb-3 bg-light rounded">
-                <h4 class="font-italic">О портале</h4>
-                <p class="mb-0">Созданный по заказу министерства Нижегородской области.</p>
+        <div class="profile">
+            <form id="profileForm" name="profile" onsubmit="return false">
+                <label for="fname">Имя</label>
+                <input type="text" id="fname" name="firstname">
+
+                <label for="lname">Фамилия</label>
+                <input type="text" id="lname" name="lastname">
+
+                <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                <input type="text" id="email" name="email" placeholder="example@example.com">
+
+                <label for="comment">О себе</label>
+                <textarea id="comment" name="comment" placeholder="Напишите что нибудь.."
+                          style="height:200px"></textarea>
+
+                <input type="submit" value="Сохранить" onclick="onSubmitProfile()">
+            </form>
+        </div>
+
+
+        <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark banner">
+            <div class="col-md-6 px-0">
+                <h1 class="display-4 font-italic">Нет ничего невозможного</h1>
+                <p class="lead my-3">Оставь заявку и о ней узнают тысячи спонсоров, волонтёров, тех, кто способен
+                    сделать
+                    тебя счастливее.</p>
+                <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Рассказать о мечте...</a></p>
+            </div>
+        </div>
+
+        <div class="row mb-2 news">
+            <div class="col-md-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-success">Скоро</strong>
+                        <h3 class="mb-0">Хочу играть в футбол</h3>
+                        <div class="mb-1 text-muted">12 ноября</div>
+                        <p class="card-text mb-auto">Мы получили много заявок от воспитанников ДД №8 и организовали для
+                            них
+                            приезд Романа.</p>
+                        <a href="#" class="stretched-link">Продолжить чтение</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block"
+                         style='background-image: url("upload_images/events/shirokov.jpg");
+                     width: 200px;
+                     background-size: cover;'>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-danger">Сбор заявок</strong>
+                        <h3 class="mb-0">Дотянуться до звезды</h3>
+                        <div class="mb-1 text-muted">ДД № 15</div>
+                        <p class="mb-auto">Воспитанники детского дома №15 хотят пригласить звезду на день рождение
+                            своего ДД
+                            - Моргенште́рна.</p>
+                        <a href="#" class="stretched-link">Продолжить чтение</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block"
+                         style='background-image: url("upload_images/events/mong.jpg");
+                     width: 200px;
+                     background-size: cover;'>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <main class="container main-container">
+        <div class="row">
+            <div class="col-md-8">
+                <h3 class="pb-4 mb-4 font-italic border-bottom">
+                    Лента заявок
+                </h3>
+
+                <div class="blog-post">
+                    <h2 class="blog-post-title">Дотянуться до звезды</h2>
+                    <p class="blog-post-meta">ДД № 15 <a href="#">1000 голосов</a></p>
+
+                    <p>Воспитанники детского дома №15 хотят пригласить звезду на день рождение своего ДД -
+                        Моргенште́рна.</p>
+                    <hr>
+                    <p>Много хорошего текста.</p>
+                    <blockquote>
+                        <p>Мы сделаем это!</p>
+                    </blockquote>
+
+                </div><!-- /.blog-post -->
+
+
+                <nav class="blog-pagination">
+                    <a class="btn btn-outline-primary" href="#">Предыдущие</a>
+                    <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1"
+                       aria-disabled="true">Следующие</a>
+                </nav>
+
             </div>
 
-            <div class="p-4">
-                <h4 class="font-italic">Архивы</h4>
-                <ol class="list-unstyled mb-0">
-                    <li><a href="#">Март 2014</a></li>
-                    <li><a href="#">Февраль 2014</a></li>
-                    <li><a href="#">Январь 2014</a></li>
-                    <li><a href="#">Декабрь 2013</a></li>
-                    <li><a href="#">Ноябрь 2013</a></li>
-                    <li><a href="#">Октябрь 2013</a></li>
-                    <li><a href="#">Сентябрь 2013</a></li>
-                    <li><a href="#">Август 2013</a></li>
-                    <li><a href="#">Июль 2013</a></li>
-                    <li><a href="#">Июнь 2013</a></li>
-                    <li><a href="#">Май 2013</a></li>
-                    <li><a href="#">Апрель 2013</a></li>
-                </ol>
-            </div>
-        </aside>
+            <aside class="col-md-4">
+                <div class="p-4 mb-3 bg-light rounded">
+                    <h4 class="font-italic">О портале</h4>
+                    <p class="mb-0">Созданный по заказу министерства Нижегородской области.</p>
+                </div>
 
-    </div><!-- /.row -->
+                <div class="p-4">
+                    <h4 class="font-italic">Архивы</h4>
+                    <ol class="list-unstyled mb-0">
+                        <li><a href="#">Март 2014</a></li>
+                        <li><a href="#">Февраль 2014</a></li>
+                        <li><a href="#">Январь 2014</a></li>
+                        <li><a href="#">Декабрь 2013</a></li>
+                        <li><a href="#">Ноябрь 2013</a></li>
+                        <li><a href="#">Октябрь 2013</a></li>
+                        <li><a href="#">Сентябрь 2013</a></li>
+                        <li><a href="#">Август 2013</a></li>
+                        <li><a href="#">Июль 2013</a></li>
+                        <li><a href="#">Июнь 2013</a></li>
+                        <li><a href="#">Май 2013</a></li>
+                        <li><a href="#">Апрель 2013</a></li>
+                    </ol>
+                </div>
+            </aside>
 
-</main><!-- /.container -->
-<footer class="blog-footer">
-    <p>
-        <a href="#">Наверх</a>
-    </p>
-</footer>
+        </div><!-- /.row -->
 
-<modal-registration @callback="isReg" ref="reg"></modal-registration>
+        <!-- The Modal -->
+        <div id="id01" class="modal-login">
+        <span onclick="document.getElementById('id01').style.display='none'"
+              class="close" title="Close Modal">&times;</span>
+
+            <!-- Modal Content -->
+            <form class="modal-content animate" name="login" onsubmit="return false">
+                <div class="login-container">
+                    <label for="uname"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="uname" required>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+
+                    <button type="submit" onclick="onLogin()">Login</button>
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember"> Remember me
+                    </label>
+                </div>
+                <div class="login-container" style="background-color:#f1f1f1">
+                    <button type="button" onclick="document.getElementById('id01').style.display='none'"
+                            class="cancelbtn">Cancel
+                    </button>
+                    <span class="psw">Forgot <a href="#">password?</a></span>
+                </div>
+            </form>
+        </div>
+    </main><!-- /.container -->
+    <footer class="blog-footer">
+        <p>
+            <a href="#">Наверх</a>
+        </p>
+    </footer>
+
+    <modal-registration @callback="isReg" ref="reg"></modal-registration>
 
 
 </div>
 <script src="js/main.js"></script>
-
-
-
+<script src="js/myJs.js"></script>
 
 
 </body>
