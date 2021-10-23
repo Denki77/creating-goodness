@@ -22,10 +22,20 @@ values
     ('Детский дом № 19', '19', '1'),
     ('Детский дом № 20', '20', '1');
 
-insert into events (name, comm, status, start_date, count_days)
+insert into users (username, password, email, shelter_id)
 values
-    ('Интересное событие', 'Очень интересное событие которое будет проводиться.', 1, '2021-09-26 10:00:00.000000', 1),
-    ('Невероятно интересное событие', 'Проводится невероятно интересное мероприятие.', 2, '2021-09-26 11:00:00.000000', 2);
+    ('user1', 'pass1', 'user1@mail.ru', 1),
+    ('user2', 'pass2', 'user2@mail.ru', 1);
+
+insert into profile (user_id, firstname, lastname, comment)
+values
+    (1, 'Иван', 'Иванов', 'Вот такой вот персонаж'),
+    (2, 'Петров', 'Петр', 'Всем привет');
+
+insert into events (name, comm, status, start_date, count_days, user_id)
+values
+    ('Интересное событие', 'Очень интересное событие которое будет проводиться.', 1, '2021-09-26 10:00:00.000000', 1, 1),
+    ('Невероятно интересное событие', 'Проводится невероятно интересное мероприятие.', 2, '2021-09-26 11:00:00.000000', 2, 1);
 
 insert into tags (name)
 values
@@ -34,15 +44,7 @@ values
        ('Кино'),
        ('Театр');
 
-insert into users (username, password, email, shelter_id)
-values
-        ('user1', 'pass1', 'user1@mail.ru', 1),
-        ('user2', 'pass2', 'user2@mail.ru', 1);
 
-insert into profile (user_id, firstname, lastname, comment)
-values
-        (1, 'Иван', 'Иванов', 'Вот такой вот персонаж'),
-        (2, 'Петров', 'Петр', 'Всем привет');
 
 insert into dreams (description, annotation, user_id)
 values

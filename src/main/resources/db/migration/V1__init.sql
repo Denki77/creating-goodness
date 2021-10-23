@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS events
     status     int,
     start_date timestamp,
     count_days int,
+    user_id    bigint not null references users (id),
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
@@ -108,8 +109,8 @@ CREATE TABLE IF NOT EXISTS profile
 (
     id        bigint primary key auto_increment,
     user_id   bigint      not null references users (id),
-    firstname varchar(80) not null,
-    lastname  varchar(80) not null,
+    firstname varchar(80) ,
+    lastname  varchar(80) ,
     image     bigint references images (id),
     comment   text
 );

@@ -1,10 +1,13 @@
 package ru.leadersofdigital.dobro.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.UserDto;
+import ru.leadersofdigital.dobro.models.Profile;
 import ru.leadersofdigital.dobro.models.User;
+import ru.leadersofdigital.dobro.repositories.ProfileRepository;
 import ru.leadersofdigital.dobro.repositories.RoleRepository;
 import ru.leadersofdigital.dobro.repositories.UserRepository;
 
@@ -13,6 +16,8 @@ import ru.leadersofdigital.dobro.repositories.UserRepository;
 public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
 
     public void createNewUser(UserDto userDto) {
@@ -23,5 +28,9 @@ public class UserService {
         //user.setRole(roleRepository.getRoleByCode(userDto.getRole_code()));
         //user.setShelter_id(user.getShelter_id());
         userRepository.saveAndFlush(user);
+
+        Profile profile = new Profile();
+        profile.setUser(user);
+        profileRepository.saveAndFlush(profile);
     }
 }
