@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "dreams")
@@ -37,4 +38,10 @@ public class Dream {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "dreams_tags",
+            joinColumns = @JoinColumn(name = "dream_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
+    private List<Tag> tags;
 }
