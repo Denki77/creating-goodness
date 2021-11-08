@@ -17,7 +17,7 @@
  
     Демо:
  Демо сервиса доступно по адресу:https://brens.ru
- Ссылка на Screencast:https://yadi.sk/i/h9Adh80KFWplww
+ Ссылка на Screencast:https://cloud.mail.ru/public/SL8G/QGoFMQRjX
     
     РАЗРАБОТЧИКИ:
  Денис Фоменков tgimrv@ya.ru
