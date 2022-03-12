@@ -9,12 +9,7 @@ Vue.component('modal-registration', {
             succedeed: false,
             classError: 'is-invalid',
 
-            options: [
-                {text: 'Воспитанник детского дома', value: '1'},
-                {text: 'Официальный представитель детского дома', value: '2'},
-                {text: 'Волонтёр', value: '3'},
-                {text: 'Представитель бизнеса', value: '4'},
-            ],
+            options: null,
 
             invalid: {
                 role: false,
@@ -35,11 +30,11 @@ Vue.component('modal-registration', {
             }
         }
     },
-    // mounted() {
-    //     axios
-    //         .get('/api/v1/attribute/get_me_roles')
-    //         .then(response => (this.options = response.data));
-    // },
+    mounted() {
+        axios
+            .get('/api/v1/attribute/get_me_roles')
+            .then(response => (this.options = response.data));
+    },
     created() {
 
     },
@@ -131,8 +126,8 @@ Vue.component('modal-registration', {
         '\t\t\t\t<div class="col">\n' +
         '            \t\t<select class="form-select" v-bind:class="{ \'is-invalid\' : invalid.role}"  v-model="form.role">\n' +
         '            \t\t\t<option></option>\n' +
-        '            \t\t\t<option v-for="option in options"  v-bind:value="option.value">\n' +
-        '    \t\t\t\t\t\t{{ option.text }}\n' +
+        '            \t\t\t<option v-for="option in options"  v-bind:value="option.code">\n' +
+        '    \t\t\t\t\t\t{{ option.name }}\n' +
         '  \t\t\t\t\t\t</option>\n' +
         '                    </select>\n' +
         '                </div>\n' +
@@ -150,7 +145,7 @@ Vue.component('modal-registration', {
         '\t\t\t\t</div>\n' +
         '            </div>\n' +
         '            <div class="form-group mb-3 row">\n' +
-        '\t\t\t\t<label class="form-label col-3 col-form-label">Школа</label>\n' +
+        '\t\t\t\t<label class="form-label col-3 col-form-label">№ Детского дома</label>\n' +
         '\t\t\t\t<div class="col">\n' +
         '\t\t\t\t\t<select class="form-select mb-2 s2" attribute="shelter" v-bind:class="{ \'is-invalid\' : invalid.shelter}" v-model="form.shelter" placeholder="18"></select>\n' +
         '\t\t\t\t</div>\n' +

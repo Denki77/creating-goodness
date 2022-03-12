@@ -16,8 +16,8 @@ public class SponsorService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-//    public Page<User> findPage(int page, int pageSize) {
-//        Role role = roleRepository.findByName("sponsor").orElseThrow(() -> new ResourceNotFoundException("Role 'Sponsor' doesn't exists"));
-//        return userRepository.findByRole(role, PageRequest.of(page, pageSize));
-//    }
+    public Page<User> findPage(int page, int pageSize) {
+        Role role = roleRepository.findByName("sponsor").orElseThrow(() -> new ResourceNotFoundException("Role 'Sponsor' doesn't exists"));
+        return userRepository.findByRole(role, PageRequest.of(page, pageSize));
+    }
 }
