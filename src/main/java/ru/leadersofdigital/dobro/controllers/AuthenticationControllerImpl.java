@@ -8,38 +8,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.leadersofdigital.dobro.controllers.interfaces.AuthenticationController;
+import ru.leadersofdigital.dobro.dtos.LoginDto;
 import ru.leadersofdigital.dobro.dtos.RegisterDto;
+import ru.leadersofdigital.dobro.dtos.TokenDto;
+import ru.leadersofdigital.dobro.models.User;
 import ru.leadersofdigital.dobro.services.AuthenticationService;
 
-@RestController
+
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/auth")
-public class AuthenticationController {
+public class AuthenticationControllerImpl implements AuthenticationController {
 
     private final AuthenticationService service;
 
-
-    @PostMapping("/")
-    public void auth () {
-        System.out.println("");
-    }
-
-
-    @PostMapping("/register")
-    public String register (@Validated @RequestBody RegisterDto dto) {
+    @Override
+    public String register(RegisterDto dto) {
         return service.registerUser(dto);
     }
 
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public String login(LoginDto dto) {
+        return service.authorization(dto);
+    }
 
 
 }
