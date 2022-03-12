@@ -1,42 +1,39 @@
-
-
-
 Vue.component('modal-registration', {
     props: [],
 
     data() {
-      return {
-          body: document.getElementsByTagName('body').item(0),
-          isActive: false,
-          isLoading: false,
-          succedeed: false,
-          classError: 'is-invalid',
+        return {
+            body: document.getElementsByTagName('body').item(0),
+            isActive: false,
+            isLoading: false,
+            succedeed: false,
+            classError: 'is-invalid',
 
-          options: [
-              {text: 'Воспитанник детского дома', value: '1'},
-              {text: 'Официальный представитель детского дома', value: '2'},
-              {text: 'Волонтёр', value: '3'},
-              {text: 'Представитель бизнеса', value: '4'},
-          ],
+            options: [
+                {text: 'Воспитанник детского дома', value: '1'},
+                {text: 'Официальный представитель детского дома', value: '2'},
+                {text: 'Волонтёр', value: '3'},
+                {text: 'Представитель бизнеса', value: '4'},
+            ],
 
-          invalid: {
-              role: false,
-              username: false,
-              email: false,
-              shelter: false,
-              city: false,
-              password: false
-          },
+            invalid: {
+                role: false,
+                username: false,
+                email: false,
+                shelter: false,
+                city: false,
+                password: false
+            },
 
-          form: {
-              role: null,
-              username: null,
-              email: null,
-              shelter: null,
-              city: null,
-              password: null
-          }
-      }
+            form: {
+                role: null,
+                username: null,
+                email: null,
+                shelter: null,
+                city: null,
+                password: null
+            }
+        }
     },
     // mounted() {
     //     axios
@@ -51,7 +48,7 @@ Vue.component('modal-registration', {
     methods: {
         show() {
             this.isActive = !this.isActive
-            if(!this.isActive) return
+            if (!this.isActive) return
             let selects2 = this.body.getElementsByClassName("s2")
             for (let i = 0; i < selects2.length; i++) {
                 this.initS2(selects2[i])
@@ -59,19 +56,26 @@ Vue.component('modal-registration', {
         },
 
 
-        initS2 (s2) {
+        initS2(s2) {
             let vm = this
             let placeholder = s2.getAttribute('placeholder')
             let attribute = s2.getAttribute('attribute')
             let map = function (data) {
-                return { results: $.map(data, function (item) {return { text: item.name, id: item.id } }) };
+                return {
+                    results: $.map(data, function (item) {
+                        return {text: item.name, id: item.id}
+                    })
+                };
             }
 
             $(s2).select2({
                 placeholder: placeholder,
                 theme: "classic",
-                ajax: { url: "/api/v1/attribute/" + attribute, dataType: 'json',
-                    data: function (params) { return {q: params.term} },
+                ajax: {
+                    url: "/api/v1/attribute/" + attribute, dataType: 'json',
+                    data: function (params) {
+                        return {q: params.term}
+                    },
                     processResults: map,
                 },
             }).on('select2:select', function (e) {
@@ -86,24 +90,26 @@ Vue.component('modal-registration', {
 
         handlerErrors(fields) {
             let vm = this
-            Object.entries(vm.invalid).forEach(([key]) => { vm.invalid[key] = false });
+            Object.entries(vm.invalid).forEach(([key]) => {
+                vm.invalid[key] = false
+            });
             fields.forEach(function (item) {
                 vm.invalid[item] = true
             })
         },
 
 
-        reg () {
+        reg() {
             let vm = this
             vm.isLoading = true
-            axios.post('/api/v1/auth/register', this.form).then(function(response) {
+            axios.post('/api/v1/auth/register', this.form).then(function (response) {
                 localStorage.token = response.data;
                 vm.succedeed = true
                 vm.$emit('callback', true)
-            }).catch(function (error){
-                if(error.response ) vm.handlerErrors(error.response.data.messages)
-            }).finally(function (){
-                setTimeout(function (){
+            }).catch(function (error) {
+                if (error.response) vm.handlerErrors(error.response.data.messages)
+            }).finally(function () {
+                setTimeout(function () {
                     vm.isLoading = false
                 }, 1000);
             })
@@ -181,12 +187,12 @@ Vue.component('modal-registration', {
         '    </div>'
 })
 
-
+let now = new Date();
 
 var app = new Vue({
     el: '#app',
-    methods : {
-        showRegistration () {
+    methods: {
+        showRegistration() {
             this.$refs.reg.show();
         },
 
@@ -204,8 +210,8 @@ var app = new Vue({
     },
 
 
-
     data: {
+        nowYear: now.getFullYear(),
         isAuth: false,
         message: 'Привет, Vue!'
     }
