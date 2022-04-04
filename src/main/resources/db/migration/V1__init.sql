@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id         bigint primary key auto_increment,
+    id         SERIAL PRIMARY KEY,
     username   varchar(80) not null,
     password   varchar(80) not null,
     email      varchar(80) unique,
@@ -11,11 +11,11 @@ CREATE TABLE IF NOT EXISTS users
     updated_at timestamp default current_timestamp
 );
 
-// users roles
+/* users roles*/
 DROP TABLE IF EXISTS roles;
 CREATE TABLE IF NOT EXISTS roles
 (
-    id         bigint primary key auto_increment,
+    id         SERIAL PRIMARY KEY,
     code       varchar(80) unique,
     name       varchar(80) unique,
     status     int       default 1,
@@ -42,7 +42,7 @@ DROP TABLE IF EXISTS cities;
 
 CREATE TABLE IF NOT EXISTS cities
 (
-    id   bigint primary key auto_increment,
+    id   SERIAL PRIMARY KEY,
     name varchar(80) null,
     lat  varchar(80) null,
     lng  varchar(80) null
@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS shelters;
 
 CREATE TABLE IF NOT EXISTS shelters
 (
-    id         bigint primary key auto_increment,
+    id         SERIAL PRIMARY KEY,
     name       varchar(80) null,
     number     bigint,
     city_id    bigint,
@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS events;
 
 CREATE TABLE IF NOT EXISTS events
 (
-    id         bigint primary key auto_increment,
+    id         SERIAL PRIMARY KEY,
     name       varchar(100),
     comm       varchar(300),
     status     int,
@@ -88,7 +88,7 @@ DROP TABLE IF EXISTS images;
 
 CREATE TABLE IF NOT EXISTS images
 (
-    id    bigint primary key auto_increment,
+    id    SERIAL PRIMARY KEY,
     name  varchar(100),
     comm  text,
     image varchar(300)
@@ -107,10 +107,10 @@ DROP TABLE IF EXISTS profile;
 
 CREATE TABLE IF NOT EXISTS profile
 (
-    id        bigint primary key auto_increment,
-    user_id   bigint      not null references users (id),
-    firstname varchar(80) ,
-    lastname  varchar(80) ,
+    id        SERIAL PRIMARY KEY,
+    user_id   bigint not null references users (id),
+    firstname varchar(80),
+    lastname  varchar(80),
     image     bigint references images (id),
     comment   text
 );
@@ -119,7 +119,7 @@ DROP TABLE IF EXISTS dreams;
 
 CREATE TABLE IF NOT EXISTS dreams
 (
-    id          bigint primary key auto_increment,
+    id          SERIAL PRIMARY KEY,
     description varchar,
     annotation  varchar,
     user_id     bigint not null references users (id),
@@ -131,7 +131,7 @@ DROP TABLE IF EXISTS tags;
 
 CREATE TABLE IF NOT EXISTS tags
 (
-    id   bigint primary key auto_increment,
+    id   SERIAL PRIMARY KEY,
     name varchar(100)
 );
 

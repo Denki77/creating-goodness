@@ -1,6 +1,6 @@
 package ru.leadersofdigital.dobro.enums;
 
-public enum  EventStatus {
+public enum EventStatus {
     //завершено
     COMPLETED,
     //в процессе (идет еще)
@@ -8,5 +8,5 @@ public enum  EventStatus {
     //согласовано
     APPROVED,
     //отменено
-    CANCELLED;
+    CANCELLED
 }

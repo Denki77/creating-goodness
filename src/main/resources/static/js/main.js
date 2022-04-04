@@ -30,11 +30,11 @@ Vue.component('modal-registration', {
             }
         }
     },
-    mounted() {
-        axios
-            .get('/api/v1/attribute/get_me_roles')
-            .then(response => (this.options = response.data));
-    },
+    // mounted() {
+    //     axios
+    //         .get('/api/v1/attribute/get_me_roles')
+    //         .then(response => (this.options = response.data));
+    // },
     created() {
 
     },
@@ -124,11 +124,7 @@ Vue.component('modal-registration', {
         '           \t<div class="form-group mb-3 row">\n' +
         '\t\t\t\t<label class="form-label col-3 col-form-label">Ваша роль</label>\n' +
         '\t\t\t\t<div class="col">\n' +
-        '            \t\t<select class="form-select" v-bind:class="{ \'is-invalid\' : invalid.role}"  v-model="form.role">\n' +
-        '            \t\t\t<option></option>\n' +
-        '            \t\t\t<option v-for="option in options"  v-bind:value="option.code">\n' +
-        '    \t\t\t\t\t\t{{ option.name }}\n' +
-        '  \t\t\t\t\t\t</option>\n' +
+        '\t\t\t\t\t<select class="form-select mb-2 s2" attribute="role" v-bind:class="{ \'is-invalid\' : invalid.role}" v-model="form.role" placeholder=""></select>\n' +
         '                    </select>\n' +
         '                </div>\n' +
         '            </div>\n' +
