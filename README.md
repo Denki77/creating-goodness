@@ -28,7 +28,6 @@
 - Денис Фоменков tgimrv@ya.ru
 - Роман Шафиков machanics@gmail.com
 - Игорь Успенский wasporc@gmail.com
-- Алекс Стрелков alex9923@mail.ru
 - Никита Лупанов lupanova-2011@mail.ru
 
     

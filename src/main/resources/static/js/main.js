@@ -30,11 +30,6 @@ Vue.component('modal-registration', {
             }
         }
     },
-    // mounted() {
-    //     axios
-    //         .get('/api/v1/attribute/get_me_roles')
-    //         .then(response => (this.options = response.data));
-    // },
     created() {
 
     },

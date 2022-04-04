@@ -14,8 +14,8 @@ import ru.leadersofdigital.dobro.repositories.UserRepository;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     @Autowired
     private ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
@@ -25,8 +25,6 @@ public class UserService {
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getEmail()));
-        //user.setRole(roleRepository.getRoleByCode(userDto.getRole_code()));
-        //user.setShelter_id(user.getShelter_id());
         userRepository.saveAndFlush(user);
 
         Profile profile = new Profile();
