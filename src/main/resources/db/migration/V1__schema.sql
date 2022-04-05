@@ -1,4 +1,17 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users_events cascade;
+DROP TABLE IF EXISTS users_tags cascade;
+DROP TABLE IF EXISTS users_roles cascade;
+DROP TABLE IF EXISTS dreams_tags cascade;
+DROP TABLE IF EXISTS users_images cascade;
+DROP TABLE IF EXISTS profile cascade;
+DROP TABLE IF EXISTS images cascade;
+DROP TABLE IF EXISTS events cascade;
+DROP TABLE IF EXISTS roles cascade;
+DROP TABLE IF EXISTS dreams cascade;
+DROP TABLE IF EXISTS tags cascade;
+DROP TABLE IF EXISTS cities cascade;
+DROP TABLE IF EXISTS shelters cascade;
+DROP TABLE IF EXISTS users cascade;
 
 CREATE TABLE IF NOT EXISTS users
 (
@@ -11,8 +24,6 @@ CREATE TABLE IF NOT EXISTS users
     updated_at timestamp default current_timestamp
 );
 
-/* users roles*/
-DROP TABLE IF EXISTS roles;
 CREATE TABLE IF NOT EXISTS roles
 (
     id         SERIAL PRIMARY KEY,
@@ -22,14 +33,6 @@ CREATE TABLE IF NOT EXISTS roles
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
-INSERT INTO roles (code, name)
-VALUES ('admin', 'Администратор'),
-       ('sponsor', 'Спонсор'),
-       ('volunteer', 'Волонтёр'),
-       ('orphanage', 'Официальный представитель детского дома'),
-       ('pupil', 'Воспитанник');
-
-DROP TABLE IF EXISTS users_roles;
 
 CREATE TABLE IF NOT EXISTS users_roles
 (
@@ -38,8 +41,6 @@ CREATE TABLE IF NOT EXISTS users_roles
     primary key (user_id, role_id)
 );
 
-DROP TABLE IF EXISTS cities;
-
 CREATE TABLE IF NOT EXISTS cities
 (
     id   SERIAL PRIMARY KEY,
@@ -47,8 +48,6 @@ CREATE TABLE IF NOT EXISTS cities
     lat  varchar(80) null,
     lng  varchar(80) null
 );
-
-DROP TABLE IF EXISTS shelters;
 
 CREATE TABLE IF NOT EXISTS shelters
 (
@@ -59,8 +58,6 @@ CREATE TABLE IF NOT EXISTS shelters
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
-
-DROP TABLE IF EXISTS events;
 
 CREATE TABLE IF NOT EXISTS events
 (
@@ -75,16 +72,12 @@ CREATE TABLE IF NOT EXISTS events
     updated_at timestamp default current_timestamp
 );
 
-DROP TABLE IF EXISTS users_events;
-
 CREATE TABLE IF NOT EXISTS users_events
 (
     user_id  bigint not null references users (id),
     event_id bigint not null references events (id),
     primary key (user_id, event_id)
 );
-
-DROP TABLE IF EXISTS images;
 
 CREATE TABLE IF NOT EXISTS images
 (
@@ -94,16 +87,12 @@ CREATE TABLE IF NOT EXISTS images
     image varchar(300)
 );
 
-DROP TABLE IF EXISTS users_images;
-
 CREATE TABLE IF NOT EXISTS users_images
 (
     user_id  bigint not null references users (id),
     image_id bigint not null references images (id),
     primary key (user_id, image_id)
 );
-
-DROP TABLE IF EXISTS profile;
 
 CREATE TABLE IF NOT EXISTS profile
 (
@@ -115,8 +104,6 @@ CREATE TABLE IF NOT EXISTS profile
     comment   text
 );
 
-DROP TABLE IF EXISTS dreams;
-
 CREATE TABLE IF NOT EXISTS dreams
 (
     id          SERIAL PRIMARY KEY,
@@ -127,15 +114,11 @@ CREATE TABLE IF NOT EXISTS dreams
     updated_at  timestamp default current_timestamp
 );
 
-DROP TABLE IF EXISTS tags;
-
 CREATE TABLE IF NOT EXISTS tags
 (
     id   SERIAL PRIMARY KEY,
     name varchar(100)
 );
-
-DROP TABLE IF EXISTS dreams_tags;
 
 CREATE TABLE IF NOT EXISTS dreams_tags
 (
@@ -144,12 +127,9 @@ CREATE TABLE IF NOT EXISTS dreams_tags
     primary key (dream_id, tag_id)
 );
 
-DROP TABLE IF EXISTS users_tags;
-
 CREATE TABLE IF NOT EXISTS users_tags
 (
     user_id bigint not null references users (id),
     tag_id  bigint not null references tags (id),
     primary key (user_id, tag_id)
 )
-
