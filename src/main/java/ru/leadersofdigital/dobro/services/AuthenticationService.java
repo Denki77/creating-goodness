@@ -1,6 +1,5 @@
 package ru.leadersofdigital.dobro.services;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +28,6 @@ public class AuthenticationService {
 
     @Autowired
     private ProfileRepository profileRepository;
-
 
     public String authorization (LoginDto dto) {
         User user = userRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new ResourceNotFoundException("Email not found"));

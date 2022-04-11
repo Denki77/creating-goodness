@@ -8,10 +8,12 @@ DROP TABLE IF EXISTS images cascade;
 DROP TABLE IF EXISTS events cascade;
 DROP TABLE IF EXISTS roles cascade;
 DROP TABLE IF EXISTS dreams cascade;
+DROP TABLE IF EXISTS users_dreams cascade;
 DROP TABLE IF EXISTS tags cascade;
 DROP TABLE IF EXISTS cities cascade;
 DROP TABLE IF EXISTS shelters cascade;
 DROP TABLE IF EXISTS users cascade;
+DROP TABLE IF EXISTS permissions cascade;
 
 CREATE TABLE IF NOT EXISTS users
 (
@@ -127,9 +129,23 @@ CREATE TABLE IF NOT EXISTS dreams_tags
     primary key (dream_id, tag_id)
 );
 
+CREATE TABLE IF NOT EXISTS users_dreams
+(
+    dream_id bigint not null references dreams (id),
+    user_id  bigint not null references users (id),
+    primary key (dream_id, user_id)
+);
+
 CREATE TABLE IF NOT EXISTS users_tags
 (
     user_id bigint not null references users (id),
     tag_id  bigint not null references tags (id),
     primary key (user_id, tag_id)
+);
+
+CREATE TABLE IF NOT EXISTS permissions
+(
+    role_id    bigint       not null references roles (id),
+    permission varchar(100) not null,
+    primary key (role_id, permission)
 )

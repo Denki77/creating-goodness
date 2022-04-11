@@ -24,14 +24,11 @@ public class Token {
     }
 
     public long remainingTime () {
-        Long difference = expiredDate.getTime() - new Date().getTime();
+        long difference = expiredDate.getTime() - new Date().getTime();
         return difference / 1000 / 60;
     }
 
     private <T> T getClaimsValue(Claims claims, Function<Claims, T> claimsResolver) {
         return claimsResolver.apply(claims);
     }
-
-
 }
-

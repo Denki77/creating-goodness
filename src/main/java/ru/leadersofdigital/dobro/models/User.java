@@ -39,7 +39,7 @@ public class User {
     @OneToMany
     @JoinTable(name = "dreams",
             joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "dreams.id"))
+            inverseJoinColumns = @JoinColumn(name = "dreams_id"))
     private List<Dream> dream;
 
     @CreationTimestamp
@@ -49,6 +49,4 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-
 }

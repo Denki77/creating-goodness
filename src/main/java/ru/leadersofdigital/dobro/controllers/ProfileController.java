@@ -7,6 +7,9 @@ import ru.leadersofdigital.dobro.dto.ProfileDto;
 import ru.leadersofdigital.dobro.services.AuthenticationFacade;
 import ru.leadersofdigital.dobro.services.ProfileService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/profile")
@@ -19,17 +22,25 @@ public class ProfileController {
     private ProfileService profileService;
 
     @GetMapping()
-    public void getUserProfile(){
+    public void getUserProfile() {
         System.out.println(facade.getAuthentication().getName());
     }
 
     @GetMapping("/user/{id}")
-    public ProfileDto getProfileByUserId(@PathVariable Long id){
-        return profileService.getByUserId(id);
+    public ProfileDto getProfileByUserId(@PathVariable Long id, HttpServletResponse httpResponse) throws IOException {
+        ProfileDto profileUser = profileService.getByUserId(id);
+        if (
+                facade.getAuthentication().isAuthenticated()
+                        && facade.getAuthentication().getName().equals(profileUser.getMail())
+        ) {
+            return profileUser;
+        }
+        httpResponse.sendRedirect("/login");
+        return null;
     }
 
     @PostMapping
-    public void update(@RequestBody ProfileDto profileDto){
+    public void update(@RequestBody ProfileDto profileDto) {
         profileService.update(profileDto);
     }
 }

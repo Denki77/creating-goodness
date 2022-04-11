@@ -19,7 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().permitAll()
@@ -40,6 +41,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return authenticationManager();
     }
-
-
 }

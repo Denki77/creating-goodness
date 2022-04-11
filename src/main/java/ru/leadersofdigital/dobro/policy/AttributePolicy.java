@@ -16,7 +16,6 @@ public class AttributePolicy {
     private final CityService cityService;
     private final ShelterService shelterService;
 
-
     public List<AttributeDto> getCities (String q) {
         return cityService.findAll(q).stream().map(AttributeDto::new).collect(Collectors.toList());
     }
@@ -24,9 +23,4 @@ public class AttributePolicy {
     public List<AttributeDto> getShelters (String q) {
         return shelterService.findAll(q).stream().map(AttributeDto::new).collect(Collectors.toList());
     }
-
-
-
-
-
 }
