@@ -23,13 +23,14 @@ public class Event {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    //название
-    @Column(name = "name")
+    @Column(name = "names")
     private String name;
 
-    //описание
-    @Column(name = "comm")
-    private String comm;
+    @Column(name = "annotation")
+    private String annotation;
+
+    @Column(name = "description")
+    private String description;
 
     //статус
     @Enumerated(EnumType.ORDINAL)
@@ -54,15 +55,15 @@ public class Event {
 
     //пользователь создатель события
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "maintainer_profile_id")
+    private Profile profile;
 
     //пользователи подписчики события
-    @OneToMany
+    @ManyToMany
     @JoinTable(
-            name = "user_events",
-            joinColumns = @JoinColumn(name = "id_event"),
-            inverseJoinColumns = @JoinColumn(name = "id_user")
+            name = "profile_events",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "profile_id")
     )
-    private List<User> subscribers;
+    private List<Profile> subscribers;
 }

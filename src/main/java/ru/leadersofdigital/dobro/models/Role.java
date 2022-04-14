@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,7 +17,7 @@ public class Role {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "names")
     private String name;
 
     @Column(name = "code")
@@ -24,6 +25,11 @@ public class Role {
 
     @Column(name = "status")
     private Integer status;
+
+    @ElementCollection
+    @CollectionTable(name = "permissions",
+            joinColumns = @JoinColumn(name = "role_id"))
+    private List<String> permission;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -33,9 +39,10 @@ public class Role {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Role () {}
+    public Role() {
+    }
 
-    public Role (Long id) {
+    public Role(Long id) {
         this.id = id;
     }
 }

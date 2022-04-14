@@ -2,11 +2,15 @@ package ru.leadersofdigital.dobro.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.leadersofdigital.dobro.models.User;
+
+import java.util.Collection;
 
 @Data
 @NoArgsConstructor
-public class UserDto {
+public class UserDto implements UserDetails {
     private String username;
     private String password;
     private String email;
@@ -20,5 +24,30 @@ public class UserDto {
         //this.shelter_id = user.getShelter().getId();
         //this.shelter_id = user.getShelter_id();
         //this.role_code = user.getRole().getCode();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
     }
 }

@@ -2,6 +2,9 @@ package ru.leadersofdigital.dobro.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.UserDto;
@@ -13,7 +16,7 @@ import ru.leadersofdigital.dobro.repositories.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     @Autowired
@@ -30,5 +33,10 @@ public class UserService {
         Profile profile = new Profile();
         profile.setUser(user);
         profileRepository.saveAndFlush(profile);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }

@@ -19,17 +19,15 @@ public class Dream {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "description")
-    private String description;
-
     @Column(name = "annotation")
     private String annotation;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
-    @JoinTable(name = "users",
-            joinColumns = @JoinColumn(name = "dreams.id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
-    private User user;
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -42,6 +40,6 @@ public class Dream {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "dreams_tags",
             joinColumns = @JoinColumn(name = "dream_id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<Tag> tags;
 }

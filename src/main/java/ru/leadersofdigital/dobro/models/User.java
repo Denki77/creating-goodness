@@ -26,21 +26,11 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shelter_id")
-    private Shelter shelter;
-
     @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
-
-    @OneToMany
-    @JoinTable(name = "dreams",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "dreams_id"))
-    private List<Dream> dream;
 
     @CreationTimestamp
     @Column(name = "created_at")

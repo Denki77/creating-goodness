@@ -8,7 +8,11 @@ import javax.persistence.*;
 @Data
 @Table(name = "tags")
 public class Tag {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-    private String name;
+
+    @Column(name = "tags", unique = true)
+    private String tags;
 }
