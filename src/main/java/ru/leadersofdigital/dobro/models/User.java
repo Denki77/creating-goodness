@@ -32,6 +32,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

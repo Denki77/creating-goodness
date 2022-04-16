@@ -20,7 +20,7 @@ public class EventService {
         EventDto dto = new EventDto();
         dto.setId(event.getId());
         dto.setName(event.getName());
-        dto.setComm(event.getComm());
+        dto.setComm(event.getDescription());
         dto.setCountDays(event.getCountDays());
         dto.setStatus(event.getStatus());
         dto.setStartDate(event.getStartDate());

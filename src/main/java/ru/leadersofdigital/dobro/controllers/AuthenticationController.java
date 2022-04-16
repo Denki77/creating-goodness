@@ -27,6 +27,4 @@ public class AuthenticationController {
     public String login(LoginDto dto) {
         return service.authorization(dto);
     }
-
-
 }

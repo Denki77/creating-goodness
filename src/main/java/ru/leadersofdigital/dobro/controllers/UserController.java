@@ -16,7 +16,6 @@ public class UserController {
 
     @PostMapping("/register")
     public void register(@RequestBody UserDto userDto) {
-
         userService.createNewUser(userDto);
     }
 }

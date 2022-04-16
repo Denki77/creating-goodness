@@ -24,7 +24,6 @@ public class AuthenticationService {
     BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
     private final JwtTokenUtil tokenUtil;
     private final UserRepository userRepository;
-    private final RoleService roleService;
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -36,7 +35,7 @@ public class AuthenticationService {
             throw new InvalidDataException(List.of("Invalid data password or email"));
         }
 
-        return tokenUtil.generateToken(user);
+        return getGeneratedToken(user);
     }
 
     public String registerUser (RegisterDto dto) {
@@ -49,16 +48,23 @@ public class AuthenticationService {
         user.setUsername(dto.getUsername());
         user.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
 
-        if (dto.getShelter() != null) {
-            user.setShelter(new Shelter(dto.getShelter()));
-        }
         if (dto.getRole() != null) {
             user.setRoles(List.of(new Role(dto.getRole())));
         }
+
         user = userRepository.save(user);
+
         Profile profile = new Profile();
+        if (dto.getShelter() != null) {
+            profile.setShelter(new Shelter(dto.getShelter()));
+        }
+
         profile.setUser(user);
         profileRepository.saveAndFlush(profile);
+        return getGeneratedToken(user);
+    }
+
+    private String getGeneratedToken(User user) {
         return tokenUtil.generateToken(user);
     }
 }

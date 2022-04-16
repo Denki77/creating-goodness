@@ -27,7 +27,7 @@ public class ProfileService {
         ProfileDto dto = new ProfileDto();
         dto.setFirstname(profile.getFirstname());
         dto.setLastname(profile.getLastname());
-        dto.setComment(profile.getComment());
+        dto.setComment(profile.getDescription());
         dto.setMail(profile.getUser().getEmail());
         dto.setUserId(profile.getUser().getId());
         return dto;
@@ -42,6 +42,6 @@ public class ProfileService {
         Profile profile = profileRepository.getByUserId(dto.getUserId());
         profile.setFirstname(dto.getFirstname());
         profile.setLastname(dto.getLastname());
-        profile.setComment(dto.getComment());
+        profile.setDescription(dto.getComment());
     }
 }

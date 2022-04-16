@@ -30,7 +30,7 @@ public class DreamService {
         Dream dream = new Dream();
         dream.setDescription(dreamDto.getDescription());
         dream.setAnnotation(dreamDto.getAnnotation());
-        dream.setUser(dreamDto.getUser());
+        dream.setProfile(dreamDto.getProfile());
         dreamRepository.save(dream);
         return new DreamDto(dream);
     }

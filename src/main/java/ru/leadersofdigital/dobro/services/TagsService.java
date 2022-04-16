@@ -16,8 +16,7 @@ public class TagsService {
     public List<TagDto> getAll(){
         return tagsRepository.findAll().stream().map(tag -> {
             TagDto tagDto = new TagDto();
-            tagDto.setName(tag.getName());
-            tagDto.setName(tagDto.getName());
+            tagDto.setName(tag.getTags());
             return tagDto;
         }).collect(Collectors.toList());
     }
