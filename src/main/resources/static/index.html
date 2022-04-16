@@ -2,7 +2,7 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
-    <title>Title</title>
+    <title>Воплоти мечту в реальность!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/@tabler/core@latest/dist/css/tabler.min.css">
@@ -67,7 +67,8 @@
                         <path d="M21 21l-5.2-5.2"></path>
                     </svg>
                 </a>
-                <a class="btn btn-sm btn-outline-secondary" href="/login.html">Войти</a>
+                <a class="btn btn-sm btn-outline-secondary" v-if="!token" href="/login.html">Войти</a>
+                <a class="btn btn-sm btn-outline-secondary" v-if="token" href="#" v-on:click="actionLogout">Выйти</a>
             </div>
         </div>
     </header>
@@ -127,11 +128,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 
 </div>
 <main class="container">

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -44,14 +43,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .antMatcher("/api/v1/dream*")
+//                .authorizeRequests()
+//                .antMatchers(HttpMethod.POST, "/api/v1/dream*").hasAnyRole("PUPIL")
+//                .antMatchers(HttpMethod.PUT, "/api/v1/dream*").hasAnyRole("PUPIL")
+//                .antMatchers(HttpMethod.DELETE, "/api/v1/dream*").hasAnyRole("ORPHANAGE")
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/api/v1/profile*").hasAnyRole("USER")
+//                .anyRequest().permitAll()
+//                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .headers().frameOptions().disable();
         http
-                .antMatcher("/api/v1/dream*")
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/dream*").hasAnyRole("PUPIL")
-                .antMatchers(HttpMethod.PUT, "/api/v1/dream*").hasAnyRole("PUPIL")
-                .antMatchers(HttpMethod.DELETE, "/api/v1/dream*").hasAnyRole("ORPHANAGE");
-        http.authorizeRequests()
-                .antMatchers("/api/v1/profile*").hasAnyRole("USER")
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

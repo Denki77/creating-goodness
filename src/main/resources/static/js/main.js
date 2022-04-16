@@ -45,7 +45,6 @@ Vue.component('modal-registration', {
             }
         },
 
-
         initS2(s2) {
             let vm = this
             let placeholder = s2.getAttribute('placeholder')
@@ -182,11 +181,18 @@ var app = new Vue({
             this.$refs.reg.show();
         },
 
+        actionLogout() {
+            localStorage.removeItem("token");
+            this.isReg(false);
+            // axios.get('/api/v1/auth/logout')
+            // .then(response => (this.info = response));
+            window.location.reload();
+        },
+
         isReg(bool) {
             this.isAuth = bool
         }
     },
-
 
     computed: {
         token() {
@@ -195,10 +201,13 @@ var app = new Vue({
         }
     },
 
-
     data: {
         nowYear: now.getFullYear(),
         isAuth: false,
-        message: 'Привет, Vue!'
+        message: 'Привет, Vue!',
+        form: {
+            email: null,
+            password: null
+        }
     }
-})
+});

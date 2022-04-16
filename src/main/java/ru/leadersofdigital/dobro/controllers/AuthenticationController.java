@@ -3,10 +3,7 @@ package ru.leadersofdigital.dobro.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.leadersofdigital.dobro.dtos.LoginDto;
 import ru.leadersofdigital.dobro.dtos.RegisterDto;
 import ru.leadersofdigital.dobro.services.AuthenticationService;
@@ -24,7 +21,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public String login(LoginDto dto) {
+    public String login(@RequestBody @Validated LoginDto dto) {
         return service.authorization(dto);
+    }
+
+    @GetMapping("/logout")
+    public void logout() {
+        // разлогинить ннадо?! или достаточно на фронте грохнуть токен
     }
 }

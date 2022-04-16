@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru" prefix="og: http://ogp.me/ns#">
+<html lang="ru" prefix="og: http://ogp.me/ns#" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,11 +8,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/@tabler/core@latest/dist/css/tabler.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
             crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
 
         .show {
@@ -43,20 +48,26 @@
     <!-- Custom styles for this template -->
     <link href="css/dobro1.css" rel="stylesheet">
 <body class="text-center">
-<form class="form-signin">
+<div class="form-signin" id="app">
     <h1 class="h3 mb-3 font-weight-normal">Пожалуйста войдите</h1>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
-    <label for="inputPassword" class="sr-only">Пароль</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required="">
+    <div v-if="errorText" class="alert-danger">
+        Проверьте форму!
+    </div>
+    <label for="email" class="sr-only">Email</label>
+    <input type="email" id="email" v-model="form.email" name="email" class="form-control" placeholder="Email"
+           required="" autofocus="">
+    <label for="password" class="sr-only">Пароль</label>
+    <input type="password" id="password" v-model="form.password" name="password" class="form-control"
+           placeholder="Пароль" required="">
     <div class="checkbox mb-3">
         <label>
             <input type="checkbox" value="remember-me"> Запомнить меня
         </label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+    <a class="btn btn-lg btn-primary btn-block" href="#" v-on:click="actionLogin">Войти</a>
     <p class="mt-5 mb-3 text-muted"><a href="/">На главную</a></p>
     <p class="mt-5 mb-3 text-muted">&copy; 2017-2022</p>
-</form>
+</div>
 </body>
+<script src="js/login.js"></script>
 </html>
