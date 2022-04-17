@@ -18,6 +18,7 @@ import ru.leadersofdigital.dobro.repositories.RoleRepository;
 import ru.leadersofdigital.dobro.repositories.UserRepository;
 
 import java.util.Collection;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,6 +66,6 @@ public class UserService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        return roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getCode().toUpperCase(Locale.ROOT))).collect(Collectors.toList());
     }
 }

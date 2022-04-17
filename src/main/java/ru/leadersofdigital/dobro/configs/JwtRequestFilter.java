@@ -30,7 +30,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (request.getHeader("Authorization") != null) {
             // ** FORMATTED: token [----] ** //
-            String token = request.getHeader("Authorization").substring(5);
+            String token = request.getHeader("Authorization").substring(6);
             try {
                 Token tokenObjects = jwtTokenUtil.decode(token);
 
@@ -54,6 +54,4 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
-
 }

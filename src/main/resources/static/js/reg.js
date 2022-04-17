@@ -93,6 +93,7 @@ Vue.component('modal-registration', {
             vm.isLoading = true
             axios.post('/api/v1/auth/register', this.form).then(function (response) {
                 localStorage.token = response.data;
+                axios.defaults.headers.common['Authorization'] = localStorage.token;
                 vm.succedeed = true
                 vm.$emit('callback', true)
             }).catch(function (error) {

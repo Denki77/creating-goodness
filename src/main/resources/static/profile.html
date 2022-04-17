@@ -44,17 +44,17 @@
         <div class="row">
             <div class="col-md-8">
                 <h1 class="pb-4 mb-4 font-italic border-bottom">
-                    На портале вы зарегистрированы как: {{ profile.role }}
+                    На портале вы зарегистрированы как: <b>{{ profile.role }}</b>
                 </h1>
 
                 <div class="blog-post">
                     <h3 class="blog-post-title">Данные для входа:</h3>
-                    <p>Ваш адрес электронной почты: {{ profile.email }}</p>
-                    <p>Ваш имя пользователя: {{ profile.username }}</p>
+                    <p>Ваш адрес электронной почты: <b>{{ profile.email }}</b></p>
+                    <p>Ваш имя пользователя: <b>{{ profile.username }}</b></p>
                     <hr>
                     <h3 class="blog-post-title">Ваши персональные данные:</h3>
-                    <p>Ваше имя: {{ profile.firstname }}</p>
-                    <p>Ваша фамилия: {{ profile.lastname }}</p>
+                    <p>Ваше имя: <b>{{ profile.firstname }}</b></p>
+                    <p>Ваша фамилия: <b>{{ profile.lastname }}</b></p>
                     <p>Кратко о себе:</p>
                     <p>
                         <input type="text" id="annotation" v-model="profile.annotation" name="annotation"

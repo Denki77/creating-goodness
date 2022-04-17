@@ -70,6 +70,7 @@
                     <a class="btn btn-sm btn-outline-secondary" v-if="!token" href="/login.html">Войти</a>
                     <a class="btn btn-sm btn-outline-secondary" v-if="token" href="#"
                        v-on:click="actionLogout">Выйти</a>
+                    <a class="btn btn-sm btn-outline-secondary" v-if="token" href="/profile.html">Ваш профиль</a>
                 </div>
             </div>
         </header>
@@ -195,7 +196,6 @@
     </main><!-- /.container -->
     <div-footer></div-footer>
     <modal-registration @callback="isReg" ref="reg"></modal-registration>
-
 </div>
 <script src="js/reg.js"></script>
 <script src="js/components/footer.js"></script>

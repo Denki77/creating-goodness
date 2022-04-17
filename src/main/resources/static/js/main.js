@@ -26,12 +26,17 @@ new Vue({
             this.isAuth = bool
         }
     },
+    created() {
+        console.log("created");
+        if (this.token !== null) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
+            this.isReg(true);
+        }
+    },
 
     computed: {
         token() {
-            console.log("check auth");
-            if (localStorage.getItem("token") != null) return true
-            return this.isAuth;
+            return localStorage.getItem("token");
         }
     },
     components: {

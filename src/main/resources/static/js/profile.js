@@ -4,7 +4,10 @@ new Vue({
 
     created() {
         console.log("getProfile");
-        axios.get('/api/v1/profile', [])
+        if (localStorage.getItem("token") !== null) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
+        }
+        axios.get('/api/v1/profile')
             .then(response => {
                 if (response.data) {
                     console.log(response.data);

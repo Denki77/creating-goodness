@@ -38,11 +38,13 @@ public class ProfileService {
             return dto;
         }
         dto.setFirstname(profile.getFirstname());
+        dto.setUsername(profile.getUser().getUsername());
         dto.setLastname(profile.getLastname());
         dto.setAnnotation(profile.getAnnotation());
         dto.setDescription(profile.getDescription());
         dto.setEmail(profile.getUser().getEmail());
         dto.setUserId(profile.getUser().getId());
+        dto.setRole(profile.getUser().getRoles().get(0).getName());
         return dto;
     }
 
@@ -58,8 +60,8 @@ public class ProfileService {
         profile.setDescription(dto.getDescription());
     }
 
-    public ProfileDto getProfileByUserName(String name) {
-        User user = userRepository.getUserByUsername(name);
+    public ProfileDto getProfileByUserName(String email) {
+        User user = userRepository.getUserByEmail(email);
         Profile profile = profileRepository.getProfileByUser(user);
         return getProfileDtoByProfile(profile);
     }

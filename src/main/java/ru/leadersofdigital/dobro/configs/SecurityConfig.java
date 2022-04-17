@@ -59,12 +59,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .headers().frameOptions().disable();
         http
                 .csrf().disable()
+//                .authorizeRequests()
+//                .anyRequest().permitAll()
+//                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .headers().frameOptions().disable();
                 .authorizeRequests()
-                .anyRequest().permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/static/**", "/js/**", "/css/**", "/upload_images/**").permitAll()
+                .antMatchers("/api/v1/auth/**").permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .headers().frameOptions().disable();
+                .headers().frameOptions().disable()
+//                .antMatchers("/api/v1/profile**", "/api/v1/dream**").authenticated()
+//                .antMatchers("/profile.html", "/dream.html").authenticated()
+        ;
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
