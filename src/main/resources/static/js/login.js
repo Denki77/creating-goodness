@@ -1,6 +1,6 @@
 let now = new Date();
 
-var app = new Vue({
+new Vue({
     el: '#app',
     methods: {
         actionLogin() {
@@ -19,23 +19,21 @@ var app = new Vue({
                 })
             // .finally(() => (window.location.href = '/'));
         },
-
-        isReg(bool) {
-            this.isAuth = bool
-        }
     },
 
     computed: {
-        token() {
-            if (localStorage.getItem("token") != null) return true
-            return this.isAuth;
+        checkAuth() {
+            if (localStorage.getItem("token") != null) {
+                window.location.href = '/';
+            }
         }
+    },
+    components: {
+        'div-footer': divFooter,
     },
 
     data: {
         nowYear: now.getFullYear(),
-        isAuth: false,
-        message: 'Привет, Vue!',
         form: {
             email: null,
             password: null
