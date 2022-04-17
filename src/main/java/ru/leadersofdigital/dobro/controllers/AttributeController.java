@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.leadersofdigital.dobro.dto.ShelterDto;
 import ru.leadersofdigital.dobro.models.City;
 import ru.leadersofdigital.dobro.models.Role;
-import ru.leadersofdigital.dobro.models.Shelter;
 import ru.leadersofdigital.dobro.services.CityService;
 import ru.leadersofdigital.dobro.services.RoleService;
 import ru.leadersofdigital.dobro.services.ShelterService;
@@ -30,11 +30,11 @@ public class AttributeController {
     }
 
     @GetMapping("/shelter")
-    public List<Shelter> findShelter(String q) {
+    public List<ShelterDto> findShelter(String q) {
         if (q == null) {
-            return shelterService.getMeAllShelters();
+            return shelterService.getMeAllSheltersAsShelterDtoS();
         }
-        return shelterService.getMeAllShelters(q);
+        return shelterService.getMeAllSheltersAsShelterDtoS(q);
     }
 
     @GetMapping("/role")

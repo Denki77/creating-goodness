@@ -22,8 +22,8 @@ public class ProfileController {
     private ProfileService profileService;
 
     @GetMapping()
-    public void getUserProfile() {
-        System.out.println(facade.getAuthentication().getName());
+    public ProfileDto getUserProfile() {
+        return profileService.getProfileByUserName(facade.getAuthentication().getName());
     }
 
     @GetMapping("/user/{id}")
@@ -31,7 +31,7 @@ public class ProfileController {
         ProfileDto profileUser = profileService.getByUserId(id);
         if (
                 facade.getAuthentication().isAuthenticated()
-                        && facade.getAuthentication().getName().equals(profileUser.getMail())
+                        && facade.getAuthentication().getName().equals(profileUser.getEmail())
         ) {
             return profileUser;
         }

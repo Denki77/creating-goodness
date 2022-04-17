@@ -1,7 +1,8 @@
 package ru.leadersofdigital.dobro.models;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,8 +12,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "dreams")
+@Setter
+@Getter
 @NoArgsConstructor
-@Data
 public class Dream {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

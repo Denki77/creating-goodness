@@ -27,5 +27,4 @@ public class RegisterDto {
     @NotNull(message = "Field That's incredible! empty")
     @Length(min = 6)
     private String password;
-
 }

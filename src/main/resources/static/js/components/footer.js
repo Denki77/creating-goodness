@@ -1,3 +1,4 @@
+let now = new Date();
 var divFooter = {
     render: function (createElement) {
         var year = "Все права защищены. 2017-" + now.getFullYear();

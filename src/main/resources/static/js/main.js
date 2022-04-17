@@ -1,4 +1,11 @@
-let now = new Date();
+switch (true) {
+    case typeof divFooter === 'undefined':
+        divFooter = null;
+        break;
+    case typeof dataProfile === 'undefined':
+        dataProfile = null;
+        break;
+}
 
 new Vue({
     el: '#app',

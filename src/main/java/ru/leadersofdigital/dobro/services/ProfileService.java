@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.ProfileDto;
 import ru.leadersofdigital.dobro.enums.Permissions;
 import ru.leadersofdigital.dobro.models.Profile;
+import ru.leadersofdigital.dobro.models.User;
 import ru.leadersofdigital.dobro.repositories.ProfileRepository;
+import ru.leadersofdigital.dobro.repositories.UserRepository;
 
 import java.util.List;
 
@@ -18,17 +20,28 @@ public class ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
 
-    public void getByUser(String name){
+    @Autowired
+    private UserRepository userRepository;
+
+    public void getByUser(String name) {
 
     }
 
     public ProfileDto getByUserId(Long id) {
         Profile profile = profileRepository.getByUserId(id);
+        return getProfileDtoByProfile(profile);
+    }
+
+    private ProfileDto getProfileDtoByProfile(Profile profile) {
         ProfileDto dto = new ProfileDto();
+        if (profile == null) {
+            return dto;
+        }
         dto.setFirstname(profile.getFirstname());
         dto.setLastname(profile.getLastname());
-        dto.setComment(profile.getDescription());
-        dto.setMail(profile.getUser().getEmail());
+        dto.setAnnotation(profile.getAnnotation());
+        dto.setDescription(profile.getDescription());
+        dto.setEmail(profile.getUser().getEmail());
         dto.setUserId(profile.getUser().getId());
         return dto;
     }
@@ -42,6 +55,12 @@ public class ProfileService {
         Profile profile = profileRepository.getByUserId(dto.getUserId());
         profile.setFirstname(dto.getFirstname());
         profile.setLastname(dto.getLastname());
-        profile.setDescription(dto.getComment());
+        profile.setDescription(dto.getDescription());
+    }
+
+    public ProfileDto getProfileByUserName(String name) {
+        User user = userRepository.getUserByUsername(name);
+        Profile profile = profileRepository.getProfileByUser(user);
+        return getProfileDtoByProfile(profile);
     }
 }

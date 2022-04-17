@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 public class ProfileDto {
     private String firstname;
     private String lastname;
-    private String comment;
-    private String mail;
+    private String annotation;
+    private String description;
+    private String email;
     private Long userId;
 }

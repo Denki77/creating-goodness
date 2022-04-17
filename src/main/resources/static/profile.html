@@ -10,35 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
             crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <style>
-
-        .show {
-            display: block;
-        }
-
-        .select2-container--open {
-            z-index: 9999999;
-        }
-
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -54,23 +29,12 @@
                     <a class="blog-header-logo text-dark" href="/">Здесь сбываются мечты</a>
                 </div>
                 <div class="col-4 d-flex justify-content-end align-items-center">
-                    <a class="link-secondary" href="#" aria-label="Search">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"
-                             viewbox="0 0 24 24"><title>Поиск</title>
-                            <circle cx="10.5" cy="10.5" r="7.5"></circle>
-                            <path d="M21 21l-5.2-5.2"></path>
-                        </svg>
-                    </a>
-                    <span>Ваша роль: Воспитанник</span>
                 </div>
             </div>
         </header>
 
         <div class="nav-scroller py-1 mb-2">
             <nav class="nav d-flex justify-content-between">
-                <a class="p-2 link-secondary" href="cabinet_sponsor.html">ЛК Спонсора</a>
-                <a class="p-2 link-secondary" href="cabinet.html">ЛК Воспитанника</a>
                 <a class="p-2 link-secondary" href="contacts.html">Контакты</a>
             </nav>
         </div>
@@ -78,30 +42,64 @@
     </div>
     <main class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
+                <h1 class="pb-4 mb-4 font-italic border-bottom">
+                    На портале вы зарегистрированы как: {{ profile.role }}
+                </h1>
+
+                <div class="blog-post">
+                    <h3 class="blog-post-title">Данные для входа:</h3>
+                    <p>Ваш адрес электронной почты: {{ profile.email }}</p>
+                    <p>Ваш имя пользователя: {{ profile.username }}</p>
+                    <hr>
+                    <h3 class="blog-post-title">Ваши персональные данные:</h3>
+                    <p>Ваше имя: {{ profile.firstname }}</p>
+                    <p>Ваша фамилия: {{ profile.lastname }}</p>
+                    <p>Кратко о себе:</p>
+                    <p>
+                        <input type="text" id="annotation" v-model="profile.annotation" name="annotation"
+                               class="form-control" placeholder="Кратко о себе">
+                    </p>
+                    <p>Полно о себе:</p>
+                    <p>
+                        <textarea v-model="profile.description" id="description" name="description"
+                                  class="form-control"></textarea>
+                    </p>
+                </div>
+            </div>
+
+            <aside class="col-md-4">
                 <div class="p-4 mb-3 bg-light rounded">
                     <h4 class="font-italic">О портале</h4>
                     <p class="mb-0">Созданный по заказу Министерства информационных технологий и связи Нижегородской
                         области.</p>
-                    <p class="mb-0">
-                        <a href="https://88888888.digital/">Сайт</a>
-                    </p>
-                    <p class="mb-0">
-                        Обратная связь: official@mininform.kreml.nnov.ru
-                    </p>
                 </div>
 
-            </div>
+                <div class="p-4">
+                    <h4 class="font-italic">Архивы</h4>
+                    <ol class="list-unstyled mb-0">
+                        <li><a href="#">Март 2014</a></li>
+                        <li><a href="#">Февраль 2014</a></li>
+                        <li><a href="#">Январь 2014</a></li>
+                        <li><a href="#">Декабрь 2013</a></li>
+                        <li><a href="#">Ноябрь 2013</a></li>
+                        <li><a href="#">Октябрь 2013</a></li>
+                        <li><a href="#">Сентябрь 2013</a></li>
+                        <li><a href="#">Август 2013</a></li>
+                        <li><a href="#">Июль 2013</a></li>
+                        <li><a href="#">Июнь 2013</a></li>
+                        <li><a href="#">Май 2013</a></li>
+                        <li><a href="#">Апрель 2013</a></li>
+                    </ol>
+                </div>
+            </aside>
 
         </div><!-- /.row -->
 
     </main><!-- /.container -->
-    <div id="footer"></div>
-    <modal-registration @callback="isReg" ref="reg"></modal-registration>
     <div-footer></div-footer>
 </div>
 </body>
-<script src="js/reg.js"></script>
 <script src="js/components/footer.js"></script>
-<script src="js/main.js"></script>
+<script src="js/profile.js"></script>
 </html>

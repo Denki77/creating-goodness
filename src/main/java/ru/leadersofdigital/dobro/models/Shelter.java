@@ -1,7 +1,7 @@
 package ru.leadersofdigital.dobro.models;
 
 
-import lombok.Data;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
 @Table(name = "shelters")
 public class Shelter {
     @Id

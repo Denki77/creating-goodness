@@ -1,5 +1,3 @@
-let now = new Date();
-
 new Vue({
     el: '#app',
     methods: {
