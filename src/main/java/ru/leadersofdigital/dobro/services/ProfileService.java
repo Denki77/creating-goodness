@@ -57,6 +57,7 @@ public class ProfileService {
         Profile profile = profileRepository.getByUserId(dto.getUserId());
         profile.setFirstname(dto.getFirstname());
         profile.setLastname(dto.getLastname());
+        profile.setAnnotation(dto.getAnnotation());
         profile.setDescription(dto.getDescription());
     }
 

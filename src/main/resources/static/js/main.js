@@ -41,6 +41,7 @@ new Vue({
     },
     components: {
         'div-footer': divFooter,
+        'calendar3': calendar3,
     },
     data: {
         nowYear: now.getFullYear(),
