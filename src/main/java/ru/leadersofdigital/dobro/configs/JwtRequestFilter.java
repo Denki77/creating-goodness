@@ -2,8 +2,8 @@ package ru.leadersofdigital.dobro.configs;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,11 +22,15 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
-    private static final Integer MIN_TIME_UPDATE_TOKEN = 5;
+    private static final Integer MIN_TIME_UPDATE_TOKEN = 200;
     private final JwtTokenUtil jwtTokenUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            @NotNull HttpServletResponse response,
+            @NotNull FilterChain filterChain
+    ) throws ServletException, IOException {
 
         if (request.getHeader("Authorization") != null) {
             // ** FORMATTED: token [----] ** //
@@ -34,19 +38,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 Token tokenObjects = jwtTokenUtil.decode(token);
 
-                if (tokenObjects.remainingTime() < MIN_TIME_UPDATE_TOKEN) {
+                if (tokenObjects.remainingTime() < MIN_TIME_UPDATE_TOKEN && request.getHeader("Refresh-Token") != null) {
                     String newToken = jwtTokenUtil.generateToken(tokenObjects);
-                    // todo обновим токен через сессию
+                    response.setHeader("Refresh-Token", newToken);
                 }
 
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(tokenObjects.getEmail(), null, tokenObjects.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
-                auth.setDetails(tokenObjects.getUserId());
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                        tokenObjects.getEmail(),
+                        null,
+                        tokenObjects.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+                );
+                auth.setDetails(tokenObjects);
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
             } catch (ExpiredJwtException e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            } catch (SignatureException e) {
-                e.printStackTrace();
             } catch (JwtException e) {
                 e.printStackTrace();
             }

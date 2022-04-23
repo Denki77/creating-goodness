@@ -23,7 +23,7 @@ public class ProfileController {
 
     @GetMapping()
     public ProfileDto getUserProfile() {
-        return profileService.getProfileByUserName(facade.getAuthentication().getName());
+        return profileService.getProfileDtoByUserName(facade.getAuthentication().getName());
     }
 
     @GetMapping("/user/{id}")
@@ -35,7 +35,8 @@ public class ProfileController {
         ) {
             return profileUser;
         }
-        httpResponse.sendRedirect("/login");
+        httpResponse.sendError(403);
+        httpResponse.sendRedirect("/");
         return null;
     }
 

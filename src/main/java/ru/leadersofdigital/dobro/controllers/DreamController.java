@@ -4,6 +4,8 @@ package ru.leadersofdigital.dobro.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -12,8 +14,13 @@ import ru.leadersofdigital.dobro.dto.DreamDto;
 import ru.leadersofdigital.dobro.error_handling.InvalidDataException;
 import ru.leadersofdigital.dobro.error_handling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.Dream;
+import ru.leadersofdigital.dobro.models.Token;
 import ru.leadersofdigital.dobro.services.DreamService;
+import ru.leadersofdigital.dobro.services.ProfileService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,12 +28,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/dream")
 public class DreamController {
     private final DreamService dreamService;
+    private final ProfileService profileService;
 
     @GetMapping
-    public Page<DreamDto> getAllDreams(@RequestParam(name = "p", defaultValue = "1") int page) {
-        Page<Dream> dreamsPage = dreamService.findPage(page - 1, 10);
-        Page<DreamDto> dtoPage = new PageImpl<>(dreamsPage.getContent().stream().map(DreamDto::new).collect(Collectors.toList()), dreamsPage.getPageable(), dreamsPage.getTotalElements());
-        return dtoPage;
+    public Page<DreamDto> getAllDreams(
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "count", defaultValue = "10") int count
+    ) {
+        Page<Dream> dreamsPage = dreamService.findPage(page - 1, count);
+        return new PageImpl<>(dreamsPage.getContent().stream().map(DreamDto::new).collect(Collectors.toList()), dreamsPage.getPageable(), dreamsPage.getTotalElements());
     }
 
     @GetMapping("/{id}")
@@ -35,7 +45,31 @@ public class DreamController {
         return new DreamDto(dream);
     }
 
-    @PostMapping
+    @GetMapping("/edit")
+    public Page<DreamDto> getAllOwnDreams(
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "count", defaultValue = "10") int count
+    ) {
+        Long profileId = this.getProfileIdByAuthenticate();
+        Page<Dream> dreamsPage = dreamService.findPage(page - 1, count, profileId);
+        return new PageImpl<>(dreamsPage.getContent().stream().map(DreamDto::new).collect(Collectors.toList()), dreamsPage.getPageable(), dreamsPage.getTotalElements());
+    }
+
+    @GetMapping("/edit/{id}")
+    public DreamDto getOneOwnDreamById(@PathVariable Long id, HttpServletResponse httpResponse) throws IOException {
+        // find owner of dream
+        Long ownerId = dreamService.findById(id).orElseThrow().getProfile().getId();
+        if (!Objects.equals(ownerId, this.getUserIdByAuthenticate())) {
+            httpResponse.sendError(403);
+            httpResponse.sendRedirect("/");
+            return new DreamDto();
+        }
+        Long profileId = this.getProfileIdByAuthenticate();
+        Dream dream = dreamService.findByIdAndProfileId(id, profileId).orElseThrow(() -> new ResourceNotFoundException("Dream doesn't exists id: " + id));
+        return new DreamDto(dream);
+    }
+
+    @PostMapping("/edit")
     public DreamDto createNewDream(@RequestBody @Validated DreamDto DreamDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InvalidDataException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
@@ -43,13 +77,26 @@ public class DreamController {
         return dreamService.createNewDream(DreamDto);
     }
 
-    @PutMapping
-    public DreamDto updateDream(@RequestBody DreamDto DreamDto) {
+    @PutMapping("/edit")
+    public DreamDto updateDream(@RequestBody DreamDto DreamDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new InvalidDataException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
+        }
         return dreamService.updateDream(DreamDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/edit/{id}")
     public void deleteById(@PathVariable Long id) {
         dreamService.deleteById(id);
+    }
+
+    private Long getProfileIdByAuthenticate() {
+        return profileService.getProfileDtoByUserId(this.getUserIdByAuthenticate()).getUserId();
+    }
+
+    private Long getUserIdByAuthenticate() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Token token = (Token) authentication.getDetails();
+        return token.getUserId();
     }
 }

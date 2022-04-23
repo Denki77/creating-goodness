@@ -22,12 +22,9 @@ new Vue({
     computed: {
         checkAuth() {
             if (localStorage.getItem("token") != null) {
-                window.location.href = '/';
+                window.location.href = '/profile.html';
             }
         }
-    },
-    components: {
-        'div-footer': divFooter,
     },
 
     data: {

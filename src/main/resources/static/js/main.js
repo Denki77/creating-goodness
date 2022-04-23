@@ -1,12 +1,3 @@
-switch (true) {
-    case typeof divFooter === 'undefined':
-        divFooter = null;
-        break;
-    case typeof dataProfile === 'undefined':
-        dataProfile = null;
-        break;
-}
-
 new Vue({
     el: '#app',
     methods: {
@@ -27,7 +18,6 @@ new Vue({
         }
     },
     created() {
-        console.log("created");
         if (this.token !== null) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
             this.isReg(true);
@@ -38,10 +28,6 @@ new Vue({
         token() {
             return localStorage.getItem("token");
         }
-    },
-    components: {
-        'div-footer': divFooter,
-        'calendar3': calendar3,
     },
     data: {
         nowYear: now.getFullYear(),

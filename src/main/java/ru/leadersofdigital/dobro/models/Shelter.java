@@ -7,7 +7,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -34,9 +33,9 @@ public class Shelter {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shelter_id")
-    private List<Profile> profiles;
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "shelter_id")
+//    private List<Profile> profiles;
 
     @CreationTimestamp
     @Column(name = "created_at")

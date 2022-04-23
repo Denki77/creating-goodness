@@ -3,7 +3,6 @@ new Vue({
     props: [],
 
     created() {
-        console.log("getProfile");
         if (localStorage.getItem("token") !== null) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
         }
@@ -15,6 +14,10 @@ new Vue({
                 }
             })
             .catch(error => {
+                if (error.response.status > 400) {
+                    localStorage.removeItem("token");
+                    window.location.href = '/login.html';
+                }
                 console.log(error);
                 this.errorText = true;
             })
@@ -25,9 +28,6 @@ new Vue({
         getProfile() {
 
         }
-    },
-    components: {
-        'div-footer': divFooter,
     },
     data: {
         profile: {

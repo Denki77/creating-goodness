@@ -43,39 +43,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .antMatcher("/api/v1/dream*")
-//                .authorizeRequests()
-//                .antMatchers(HttpMethod.POST, "/api/v1/dream*").hasAnyRole("PUPIL")
-//                .antMatchers(HttpMethod.PUT, "/api/v1/dream*").hasAnyRole("PUPIL")
-//                .antMatchers(HttpMethod.DELETE, "/api/v1/dream*").hasAnyRole("ORPHANAGE")
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/api/v1/profile*").hasAnyRole("USER")
-//                .anyRequest().permitAll()
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .headers().frameOptions().disable();
         http
                 .csrf().disable()
-//                .authorizeRequests()
-//                .anyRequest().permitAll()
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .headers().frameOptions().disable();
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/static/**", "/js/**", "/css/**", "/upload_images/**").permitAll()
                 .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/api/v1/profile**").authenticated()
+                .antMatchers("/api/v1/dream/edit**").authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .headers().frameOptions().disable()
-//                .antMatchers("/api/v1/profile**", "/api/v1/dream**").authenticated()
-//                .antMatchers("/profile.html", "/dream.html").authenticated()
-        ;
+                .headers().frameOptions().disable();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

@@ -4,9 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import ru.leadersofdigital.dobro.models.Role;
 import ru.leadersofdigital.dobro.models.Token;
 import ru.leadersofdigital.dobro.models.User;
 
@@ -27,7 +26,11 @@ public class JwtTokenUtil {
 
 
     public String generateToken (User user) {
-        return generateToken(user.getEmail(), user.getId().toString(), user.getRoles().stream().map(item -> item.getName()).collect(Collectors.toList()));
+        return generateToken(
+                user.getEmail(),
+                user.getId().toString(),
+                user.getRoles().stream().map(Role::getName).collect(Collectors.toList())
+        );
     }
 
     public String generateToken (Token token) {

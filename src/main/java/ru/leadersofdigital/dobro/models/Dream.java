@@ -27,7 +27,7 @@ public class Dream {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;
 

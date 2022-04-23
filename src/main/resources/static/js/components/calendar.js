@@ -1,4 +1,4 @@
-var calendar3 = Vue.component('calendar3', {
+Vue.component('calendar3', {
     props: [],
 
     data() {
@@ -25,13 +25,13 @@ var calendar3 = Vue.component('calendar3', {
         this.Calendar3("calendar3", new Date().getFullYear(), new Date().getMonth());
     },
     computed: {
-        load() {
-            console.log("jjj");
-
-            document.querySelector('#calendar3').onchange = function Calendar3() {
-                Calendar3("calendar3", document.querySelector('#calendar3 input').value, parseFloat(document.querySelector('#calendar3 select').options[document.querySelector('#calendar3 select').selectedIndex].value));
-            }
-        }
+        // load() {
+        //     console.log("jjj");
+        //
+        //     document.querySelector('#calendar3').onchange = function Calendar3() {
+        //         Calendar3("calendar3", document.querySelector('#calendar3 input').value, parseFloat(document.querySelector('#calendar3 select').options[document.querySelector('#calendar3 select').selectedIndex].value));
+        //     }
+        // }
     },
 
     methods: {

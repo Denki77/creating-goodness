@@ -1,5 +1,5 @@
 let now = new Date();
-var divFooter = {
+Vue.component('div-footer', {
     render: function (createElement) {
         var year = "Все права защищены. 2017-" + now.getFullYear();
         return createElement(
@@ -13,4 +13,4 @@ var divFooter = {
             ]
         )
     },
-}
+});

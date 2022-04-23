@@ -1,10 +1,12 @@
 package ru.leadersofdigital.dobro.services;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.ProfileDto;
 import ru.leadersofdigital.dobro.enums.Permissions;
+import ru.leadersofdigital.dobro.error_handling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.Profile;
 import ru.leadersofdigital.dobro.models.User;
 import ru.leadersofdigital.dobro.repositories.ProfileRepository;
@@ -23,16 +25,12 @@ public class ProfileService {
     @Autowired
     private UserRepository userRepository;
 
-    public void getByUser(String name) {
-
-    }
-
     public ProfileDto getByUserId(Long id) {
         Profile profile = profileRepository.getByUserId(id);
         return getProfileDtoByProfile(profile);
     }
 
-    private ProfileDto getProfileDtoByProfile(Profile profile) {
+    private @NotNull ProfileDto getProfileDtoByProfile(Profile profile) {
         ProfileDto dto = new ProfileDto();
         if (profile == null) {
             return dto;
@@ -61,8 +59,14 @@ public class ProfileService {
         profile.setDescription(dto.getDescription());
     }
 
-    public ProfileDto getProfileByUserName(String email) {
+    public ProfileDto getProfileDtoByUserName(String email) {
         User user = userRepository.getUserByEmail(email);
+        Profile profile = profileRepository.getProfileByUser(user);
+        return getProfileDtoByProfile(profile);
+    }
+
+    public ProfileDto getProfileDtoByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User doesn't exists id: " + userId));
         Profile profile = profileRepository.getProfileByUser(user);
         return getProfileDtoByProfile(profile);
     }

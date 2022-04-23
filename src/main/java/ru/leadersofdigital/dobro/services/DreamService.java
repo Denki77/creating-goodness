@@ -21,6 +21,10 @@ public class DreamService {
         return dreamRepository.findAllBy(PageRequest.of(page, pageSize));
     }
 
+    public Page<Dream> findPage(int page, int pageSize, Long profileId) {
+        return dreamRepository.findAllByProfileId(PageRequest.of(page, pageSize), profileId);
+    }
+
     public Optional<Dream> findById(Long id) {
         return dreamRepository.findById(id);
     }
@@ -45,5 +49,9 @@ public class DreamService {
 
     public void deleteById(Long id) {
         dreamRepository.deleteById(id);
+    }
+
+    public Optional<Dream> findByIdAndProfileId(Long id, Long profileId) {
+        return dreamRepository.findByIdAndProfileId(id, profileId);
     }
 }
