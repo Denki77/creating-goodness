@@ -13,7 +13,7 @@ public class EventDto {
     private String name;
     private String comm;
     private EventStatus status;
-    private UserDto user;
+    private ProfileDto user;
     private LocalDateTime startDate;
     private Integer countDays;
 }
