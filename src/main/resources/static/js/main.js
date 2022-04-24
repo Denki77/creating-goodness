@@ -1,3 +1,13 @@
+Vue.component('main-menu', {
+    template:
+        '<div class="nav-scroller py-1 mb-2">' +
+        '<nav class="nav d-flex justify-content-between">' +
+        '<a class="p-2 link-secondary" href="dream.html">Мечты</a>' +
+        '<a class="p-2 link-secondary" href="events.html">События</a>' +
+        '<a class="p-2 link-secondary" href="contacts.html">Контакты</a>' +
+        '</nav>' +
+        '</div>',
+});
 new Vue({
     el: '#app',
     methods: {

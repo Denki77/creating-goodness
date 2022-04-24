@@ -1,4 +1,26 @@
 /* stylelint-disable selector-list-comma-newline-after */
+.show {
+    display: block;
+}
+
+.select2-container--open {
+    z-index: 9999999;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
 
 .blog-header {
     line-height: 1;
@@ -140,4 +162,10 @@ body {
 
 #calendar3 tbody td.today {
     outline: 3px solid red;
+}
+
+.holiday a {
+    color: green;
+    font: bolder 16px Arial;
+    text-decoration: underline red solid 3px;
 }

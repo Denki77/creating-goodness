@@ -19,26 +19,39 @@ Vue.component('calendar3', {
                 {text: 'Декабрь', value: 11}
             ],
             year: new Date().getFullYear(),
+            events: [],
         }
     },
     mounted() {
         this.Calendar3("calendar3", new Date().getFullYear(), new Date().getMonth());
     },
-    computed: {
-        // load() {
-        //     console.log("jjj");
-        //
-        //     document.querySelector('#calendar3').onchange = function Calendar3() {
-        //         Calendar3("calendar3", document.querySelector('#calendar3 input').value, parseFloat(document.querySelector('#calendar3 select').options[document.querySelector('#calendar3 select').selectedIndex].value));
-        //     }
-        // }
-    },
+    computed: {},
 
     methods: {
+        getEventsByMonthAndYear: async function (month, year) {
+            await axios.get('/api/v1/event/month?month=' + (month + 1) + '&year=' + year)
+                .then(response => {
+                    if (response.data) {
+                        this.events = [];
+                        for (let oneEventKey in response.data) {
+                            var eventDate = new Date(Date.parse(response.data[oneEventKey].startDate)).getDate();
+                            if (typeof this.events[eventDate] === 'undefined') {
+                                this.events[eventDate] = [];
+                            }
+                            this.events[eventDate].push(response.data[oneEventKey]);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errorText = true;
+                });
+        },
         changecalendar: function (event) {
             this.Calendar3("calendar3", this.year, this.selected);
         },
-        Calendar3(id, year, month) {
+        async Calendar3(id, year, month) {
+            await this.getEventsByMonthAndYear(month, year);
             var Dlast = new Date(year, month + 1, 0).getDate(),
                 D = new Date(year, month, Dlast),
                 DNlast = D.getDay(),
@@ -53,16 +66,16 @@ Vue.component('calendar3', {
                 for (i = 0; i < 6; i++) calendar += '<td>';
             }
             for (i = 1; i <= Dlast; i++) {
+                let getClass = '';
                 if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
-                    calendar += '<td class="today">' + i;
+                    getClass = 'today';
+                }
+                if (i in this.events) {
+                    calendar += '<td class="holiday ' + getClass + '"><a href="/events.html?date='
+                        + year + '-' + (month + 1) + '-' + i
+                        + '">' + i + '</a>';
                 } else {
-                    if (
-                        0
-                    ) {
-                        calendar += '<td class="holiday">' + i;
-                    } else {
-                        calendar += '<td>' + i;
-                    }
+                    calendar += '<td class="' + getClass + '">' + i;
                 }
                 if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
                     calendar += '<tr>';
@@ -79,7 +92,8 @@ Vue.component('calendar3', {
         }
     },
 
-    template: '<table id="calendar3">' +
+    template: '<div><h4 class="font-italic">События</h4>' +
+        '<table id="calendar3"><tr><td></td></tr>' +
         '<thead>' +
         '<tr><td colspan="4"><select v-model="selected" v-on:change="changecalendar">' +
         '  <option v-for="option in month" v-bind:value="option.value">' +
@@ -89,5 +103,5 @@ Vue.component('calendar3', {
         '</td><td colspan="3"><input type="number" value="" min="0" max="9999" size="4" v-model="year" v-on:change="changecalendar"></td></tr>' +
         '<tr><td>Пн</td><td>Вт</td><td>Ср</td><td>Чт</td><td>Пт</td><td>Сб</td><td>Вс</td></tr>' +
         '</thead><tbody></tbody>' +
-        '</table>'
+        '</table></div>'
 });

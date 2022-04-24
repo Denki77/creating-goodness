@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class EventDto {
     private Long id;
     private String name;
-    private String comm;
+    private String description;
     private EventStatus status;
     private ProfileDto user;
     private LocalDateTime startDate;

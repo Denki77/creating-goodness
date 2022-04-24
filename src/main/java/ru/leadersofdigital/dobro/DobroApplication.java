@@ -8,6 +8,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.PropertySource;
 
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
 @SpringBootApplication
 @PropertySource("classpath:app.properties")
 public class DobroApplication extends SpringBootServletInitializer {
@@ -21,4 +24,9 @@ public class DobroApplication extends SpringBootServletInitializer {
         SpringApplication.run(DobroApplication.class, args);
     }
 
+    @PostConstruct
+    public void init() {
+        // Setting Spring Boot SetTimeZone
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC-3:00"));
+    }
 }

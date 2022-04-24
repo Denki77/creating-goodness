@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.EventDto;
 import ru.leadersofdigital.dobro.dto.ProfileDto;
-import ru.leadersofdigital.dobro.dto.UserDto;
 import ru.leadersofdigital.dobro.error_handling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.Event;
 import ru.leadersofdigital.dobro.repositories.EventRepository;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -25,7 +25,7 @@ public class EventService {
         EventDto dto = new EventDto();
         dto.setId(event.getId());
         dto.setName(event.getName());
-        dto.setComm(event.getDescription());
+        dto.setDescription(event.getDescription());
         dto.setCountDays(event.getCountDays());
         dto.setStatus(event.getStatus());
         dto.setStartDate(event.getStartDate());
@@ -44,19 +44,35 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public EventDto getById(Long id){
+    public EventDto getById(Long id) {
         return functionToDto.apply(eventRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("NotFound role id " + id)));
     }
 
-    public List<EventDto> getByDateBetween(String start, String end) {
-        return eventRepository.getEventsByStartDateBetween(LocalDateTime.parse(start), LocalDateTime.parse(end))
+    public List<EventDto> getByDateBetween(String start, String end) throws ParseException {
+        LocalDateTime startFormat = LocalDateTime.of(LocalDate.parse(this.repairDateSting(start)), LocalTime.MIN);
+        LocalDateTime endFormat = LocalDateTime.of(LocalDate.parse(this.repairDateSting(end)), LocalTime.MAX);
+        return eventRepository
+                .getEventsByStartDateBetween(
+                        startFormat,
+                        endFormat
+                )
                 .stream()
                 .map(functionToDto)
                 .collect(Collectors.toList());
     }
 
-    public List<EventDto> getByUser(Long id){
+    private String repairDateSting(String start) {
+        if (start.length() != 10) {
+            if (start.length() == 9) {
+                return start.substring(0, 5) + '0' + start.substring(5);
+            }
+            return "1970-01-01";
+        }
+        return start;
+    }
+
+    public List<EventDto> getByUser(Long id) {
         return eventRepository.getEventsByProfile_Id(id)
                 .stream()
                 .map(functionToDto)

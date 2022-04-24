@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import ru.leadersofdigital.dobro.models.Event;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 @Repository
