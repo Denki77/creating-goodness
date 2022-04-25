@@ -58,12 +58,14 @@ public class DreamController {
         return new PageImpl<>(dreamsPage.getContent().stream().map(DreamDto::new).collect(Collectors.toList()), dreamsPage.getPageable(), dreamsPage.getTotalElements());
     }
 
+    @Operation(summary = "Get dream by id", tags = "Dream")
     @GetMapping("/{id}")
     public DreamDto getOneDreamById(@PathVariable Long id) {
         Dream dream = dreamService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Dream doesn't exists id: " + id));
         return new DreamDto(dream);
     }
 
+    @Operation(summary = "Get dreams per pages", tags = "Dream")
     @GetMapping("/edit")
     public Page<DreamDto> getAllOwnDreams(
             @RequestParam(name = "page", defaultValue = "1") int page,
@@ -74,6 +76,7 @@ public class DreamController {
         return new PageImpl<>(dreamsPage.getContent().stream().map(DreamDto::new).collect(Collectors.toList()), dreamsPage.getPageable(), dreamsPage.getTotalElements());
     }
 
+    @Operation(summary = "Get one dream by id", tags = "Dream")
     @GetMapping("/edit/{id}")
     public DreamDto getOneOwnDreamById(@PathVariable Long id, HttpServletResponse httpResponse) throws IOException {
         // find owner of dream
@@ -88,6 +91,7 @@ public class DreamController {
         return new DreamDto(dream);
     }
 
+    @Operation(summary = "Create new dream", tags = "Dream")
     @PostMapping("/edit")
     public DreamDto createNewDream(@RequestBody @Validated DreamDto DreamDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -96,6 +100,7 @@ public class DreamController {
         return dreamService.createNewDream(DreamDto);
     }
 
+    @Operation(summary = "Update dream", tags = "Dream")
     @PutMapping("/edit")
     public DreamDto updateDream(@RequestBody DreamDto DreamDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -104,6 +109,7 @@ public class DreamController {
         return dreamService.updateDream(DreamDto);
     }
 
+    @Operation(summary = "Deletez dream by id", tags = "Dream")
     @DeleteMapping("/edit/{id}")
     public void deleteById(@PathVariable Long id) {
         dreamService.deleteById(id);

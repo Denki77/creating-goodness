@@ -1,5 +1,6 @@
 package ru.leadersofdigital.dobro.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import ru.leadersofdigital.dobro.services.ShelterService;
 
 import java.util.List;
 
+@Tag(name = "Attribute", description = "The attributes API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/attribute")

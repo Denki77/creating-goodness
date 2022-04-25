@@ -3,7 +3,8 @@
 package ru.leadersofdigital.dobro;
 
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.PathItem;
+import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.boot.SpringApplication;
@@ -42,11 +43,6 @@ public class DobroApplication extends SpringBootServletInitializer {
                                 .title("For geekBrains application API")
                                 .version("1.0")
                                 .description("Hakaton project")
-                                .contact(
-                                        new Contact()
-                                                .name("Denis F")
-                                                .email("tgimrv@ya.ru")
-                                )
                 )
                 .servers(
                         List.of(
@@ -54,6 +50,14 @@ public class DobroApplication extends SpringBootServletInitializer {
                                         .url("http://localhost:8080")
                                         .description("Ready for use server")
                         )
+                )
+                .paths(
+                        new Paths()
+                                .addPathItem(
+                                        "Api",
+                                        new PathItem()
+                                                .summary("What is it?")
+                                )
                 );
     }
 }

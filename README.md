@@ -21,10 +21,13 @@
 
 Демо сервиса доступно по адресу: https://88888888.digital
 
-Ссылка на Screencast:https://cloud.mail.ru/public/SL8G/QGoFMQRjX
+Swagger: /swagger-ui.html
+
+Ссылка на Screencast: https://cloud.mail.ru/public/SL8G/QGoFMQRjX
 
 РАЗРАБОТЧИКИ:
 ------------
+
 - Денис Фоменков tgimrv@ya.ru
 - Роман Шафиков machanics@gmail.com
 - Игорь Успенский wasporc@gmail.com
