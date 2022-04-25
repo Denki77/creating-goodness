@@ -1,19 +1,32 @@
 package ru.leadersofdigital.dobro.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 import ru.leadersofdigital.dobro.dto.EventDto;
+import ru.leadersofdigital.dobro.models.Event;
 import ru.leadersofdigital.dobro.services.EventService;
 
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/event")
 public class EventsController {
     private final EventService eventService;
+
+    @GetMapping
+    public Page<EventDto> getAllDreams(
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "count", defaultValue = "10") int count
+    ) {
+        Page<Event> eventsPage = eventService.findPage(page - 1, count);
+        return new PageImpl<>(eventsPage.getContent().stream().map(EventDto::new).collect(Collectors.toList()), eventsPage.getPageable(), eventsPage.getTotalElements());
+    }
 
     /**
      * Поиск события по его id
