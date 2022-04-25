@@ -1,7 +1,6 @@
 package ru.leadersofdigital.dobro.services;
 
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.ProfileDto;
@@ -30,7 +29,7 @@ public class ProfileService {
         return getProfileDtoByProfile(profile);
     }
 
-    private @NotNull ProfileDto getProfileDtoByProfile(Profile profile) {
+    private ProfileDto getProfileDtoByProfile(Profile profile) {
         ProfileDto dto = new ProfileDto();
         if (profile == null) {
             return dto;

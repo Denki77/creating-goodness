@@ -1,6 +1,13 @@
 package ru.leadersofdigital.dobro.controllers;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +30,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Tag(name = "Dream", description = "The Dream API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/dream")
@@ -30,6 +38,17 @@ public class DreamController {
     private final DreamService dreamService;
     private final ProfileService profileService;
 
+    @Operation(summary = "Gets all dreams", tags = "Dream")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Found all dreams",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = DreamDto.class)))
+                    })
+    })
     @GetMapping
     public Page<DreamDto> getAllDreams(
             @RequestParam(name = "page", defaultValue = "1") int page,
