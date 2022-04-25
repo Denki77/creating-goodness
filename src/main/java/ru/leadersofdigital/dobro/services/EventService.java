@@ -1,6 +1,8 @@
 package ru.leadersofdigital.dobro.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.EventDto;
 import ru.leadersofdigital.dobro.dto.ProfileDto;
@@ -77,5 +79,9 @@ public class EventService {
                 .stream()
                 .map(functionToDto)
                 .collect(Collectors.toList());
+    }
+
+    public Page<Event> findPage(int page, int pageSize) {
+        return eventRepository.findAllBy(PageRequest.of(page, pageSize));
     }
 }
