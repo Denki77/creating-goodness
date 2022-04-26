@@ -21,7 +21,7 @@
 
 Демо сервиса доступно по адресу: https://88888888.digital
 
-Swagger: /swagger-ui.html
+Swagger: http://88888888.digital/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
 
 Ссылка на Screencast: https://cloud.mail.ru/public/SL8G/QGoFMQRjX
 
