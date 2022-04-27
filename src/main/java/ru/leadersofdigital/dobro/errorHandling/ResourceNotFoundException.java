@@ -1,4 +1,4 @@
-package ru.leadersofdigital.dobro.error_handling;
+package ru.leadersofdigital.dobro.errorHandling;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {

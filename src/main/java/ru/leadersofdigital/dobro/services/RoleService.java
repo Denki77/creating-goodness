@@ -3,7 +3,7 @@ package ru.leadersofdigital.dobro.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.enums.ModerateStatus;
-import ru.leadersofdigital.dobro.error_handling.ResourceNotFoundException;
+import ru.leadersofdigital.dobro.errorHandling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.Role;
 import ru.leadersofdigital.dobro.repositories.RoleRepository;
 

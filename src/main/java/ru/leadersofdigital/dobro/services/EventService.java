@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.EventDto;
 import ru.leadersofdigital.dobro.dto.ProfileDto;
-import ru.leadersofdigital.dobro.error_handling.ResourceNotFoundException;
+import ru.leadersofdigital.dobro.errorHandling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.Event;
 import ru.leadersofdigital.dobro.repositories.EventRepository;
 

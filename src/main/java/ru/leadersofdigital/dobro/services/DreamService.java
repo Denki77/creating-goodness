@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.leadersofdigital.dobro.dto.DreamDto;
-import ru.leadersofdigital.dobro.error_handling.ResourceNotFoundException;
+import ru.leadersofdigital.dobro.errorHandling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.Dream;
 import ru.leadersofdigital.dobro.repositories.DreamRepository;
 

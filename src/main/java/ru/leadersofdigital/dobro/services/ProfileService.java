@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.ProfileDto;
 import ru.leadersofdigital.dobro.enums.Permissions;
-import ru.leadersofdigital.dobro.error_handling.ResourceNotFoundException;
+import ru.leadersofdigital.dobro.errorHandling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.Profile;
 import ru.leadersofdigital.dobro.models.User;
 import ru.leadersofdigital.dobro.repositories.ProfileRepository;

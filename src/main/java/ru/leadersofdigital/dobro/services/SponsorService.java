@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.leadersofdigital.dobro.error_handling.ResourceNotFoundException;
+import ru.leadersofdigital.dobro.errorHandling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.Role;
 import ru.leadersofdigital.dobro.models.User;
 import ru.leadersofdigital.dobro.repositories.RoleRepository;

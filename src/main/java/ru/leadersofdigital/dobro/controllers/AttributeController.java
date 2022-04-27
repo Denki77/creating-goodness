@@ -24,19 +24,19 @@ public class AttributeController {
     private final ShelterService shelterService;
 
     @GetMapping("/city")
-    public List<City> findCity(String q) {
-        if (q == null) {
+    public List<City> findCity(String search) {
+        if (search == null) {
             return cityService.getMeAllCities();
         }
-        return cityService.getMeAllCities(q);
+        return cityService.getMeAllCities(search);
     }
 
     @GetMapping("/shelter")
-    public List<ShelterDto> findShelter(String q) {
-        if (q == null) {
+    public List<ShelterDto> findShelter(String search) {
+        if (search == null) {
             return shelterService.getMeAllSheltersAsShelterDtoS();
         }
-        return shelterService.getMeAllSheltersAsShelterDtoS(q);
+        return shelterService.getMeAllSheltersAsShelterDtoS(search);
     }
 
     @GetMapping("/role")
