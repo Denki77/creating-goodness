@@ -26,11 +26,6 @@ public class Role {
     @Column(name = "status")
     private Integer status;
 
-    @ElementCollection
-    @CollectionTable(name = "permissions",
-            joinColumns = @JoinColumn(name = "role_id"))
-    private List<String> permission;
-
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDate createdAt;
@@ -38,6 +33,12 @@ public class Role {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDate updatedAt;
+
+    @ManyToMany
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users;
 
     public Role() {
     }

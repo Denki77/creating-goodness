@@ -1,5 +1,6 @@
 package ru.leadersofdigital.dobro.models;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "interest")
+@Data
 @NoArgsConstructor
 public class Interest {
     @Id

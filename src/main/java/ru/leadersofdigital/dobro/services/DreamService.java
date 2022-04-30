@@ -18,7 +18,7 @@ public class DreamService {
     private final DreamRepository dreamRepository;
 
     public Page<Dream> findPage(int page, int pageSize) {
-        return dreamRepository.findAllBy(PageRequest.of(page, pageSize));
+        return dreamRepository.findAll(PageRequest.of(page, pageSize));
     }
 
     public Page<Dream> findPage(int page, int pageSize, Long profileId) {

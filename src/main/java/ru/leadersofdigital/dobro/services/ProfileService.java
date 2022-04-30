@@ -4,14 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.leadersofdigital.dobro.dto.ProfileDto;
-import ru.leadersofdigital.dobro.enums.Permissions;
 import ru.leadersofdigital.dobro.errorHandling.ResourceNotFoundException;
+import ru.leadersofdigital.dobro.models.Interest;
 import ru.leadersofdigital.dobro.models.Profile;
+import ru.leadersofdigital.dobro.models.Tag;
 import ru.leadersofdigital.dobro.models.User;
 import ru.leadersofdigital.dobro.repositories.ProfileRepository;
 import ru.leadersofdigital.dobro.repositories.UserRepository;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,10 +27,20 @@ public class ProfileService {
     @Autowired
     private UserRepository userRepository;
 
-    public ProfileDto getByUserId(Long id) {
-        Profile profile = profileRepository.getByUserId(id);
-        return getProfileDtoByProfile(profile);
-    }
+    private final static Function<Profile, ProfileDto> functionToDto = profile -> {
+        ProfileDto profileDto = new ProfileDto();
+        profileDto.setId(profile.getId());
+        profileDto.setFirstname(profile.getFirstname());
+        profileDto.setLastname(profile.getLastname());
+        profileDto.setUsername(profile.getUser().getUsername());
+        profileDto.setAnnotation(profile.getAnnotation());
+        profileDto.setDescription(profile.getDescription());
+        profileDto.setEmail(profile.getUser().getEmail());
+        profileDto.setInterests(profile.getInterests().stream().map(Interest::getInterest).collect(Collectors.toList()));
+        profileDto.setTags(profile.getTags().stream().map(Tag::getTags).collect(Collectors.toList()));
+        return profileDto;
+    };
+
 
     private ProfileDto getProfileDtoByProfile(Profile profile) {
         ProfileDto dto = new ProfileDto();
@@ -46,16 +59,16 @@ public class ProfileService {
     }
 
     public boolean isAdminRole(Long id) {
-        List<String> roles = profileRepository.getRolesByUserId(id);
-        return roles.contains(Permissions.ROLE_ABSOLUTE.getCode());
+        List<String> roles = userRepository.getRolesById(id);
+        return roles.contains("ROLE_ADMIN");
     }
 
-    public void update(ProfileDto dto) {
-        Profile profile = profileRepository.getByUserId(dto.getUserId());
-        profile.setFirstname(dto.getFirstname());
-        profile.setLastname(dto.getLastname());
-        profile.setAnnotation(dto.getAnnotation());
-        profile.setDescription(dto.getDescription());
+    public void update(ProfileDto profileDto) {
+        Profile profile = profileRepository.getProfileById(profileDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Profile doesn't exists id: " + profileDto.getId()));
+        profile.setFirstname(profileDto.getFirstname());
+        profile.setLastname(profileDto.getLastname());
+        profile.setAnnotation(profileDto.getAnnotation());
+        profile.setDescription(profileDto.getDescription());
     }
 
     public ProfileDto getProfileDtoByUserName(String email) {
@@ -64,9 +77,8 @@ public class ProfileService {
         return getProfileDtoByProfile(profile);
     }
 
-    public ProfileDto getProfileDtoByUserId(Long userId) {
+    public List<ProfileDto> getListOfProfileDtoByUserId(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User doesn't exists id: " + userId));
-        Profile profile = profileRepository.getProfileByUser(user);
-        return getProfileDtoByProfile(profile);
+        return user.getProfiles().stream().map(functionToDto).collect(Collectors.toList());
     }
 }

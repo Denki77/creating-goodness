@@ -1,6 +1,5 @@
 package ru.leadersofdigital.dobro.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,9 +18,8 @@ public class Profile {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private User user;
 
     @Column(name = "firstname")
@@ -40,14 +38,14 @@ public class Profile {
     @JoinColumn(name = "shelter_id")
     private Shelter shelter;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "profile_interest",
             joinColumns = @JoinColumn(name = "profile_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "interest_id", referencedColumnName = "id"))
     private List<Interest> interests;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "profile_tags",
             joinColumns = @JoinColumn(name = "profile_id", referencedColumnName = "id"),

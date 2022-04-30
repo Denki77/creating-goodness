@@ -14,7 +14,6 @@ public class UserDto implements UserDetails {
     private String username;
     private String password;
     private String email;
-    private Long shelter_id;
     private String role_code;
 
     public UserDto(User user) {

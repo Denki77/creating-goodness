@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.leadersofdigital.dobro.models.Role;
 import ru.leadersofdigital.dobro.models.User;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findOneByUsername(String username);
 
     User getUserByEmail(String email);
+
+    List<String> getRolesById(Long id);
 }

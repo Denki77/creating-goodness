@@ -1,7 +1,6 @@
 package ru.leadersofdigital.dobro.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,31 +17,17 @@ import ru.leadersofdigital.dobro.repositories.RoleRepository;
 import ru.leadersofdigital.dobro.repositories.UserRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private ProfileRepository profileRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public void setProfileRepository(ProfileRepository profileRepository) {
-        this.profileRepository = profileRepository;
-    }
-
-    @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public void createNewUser(UserDto userDto) {
         User user = new User();
@@ -54,6 +39,10 @@ public class UserService implements UserDetailsService {
         Profile profile = new Profile();
         profile.setUser(user);
         profileRepository.saveAndFlush(profile);
+    }
+
+    public List<Profile> getAllUserProfiles(Long user_id) {
+        return profileRepository.getProfilesByUserId(user_id);
     }
 
     @Override

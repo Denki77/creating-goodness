@@ -14,7 +14,6 @@ DROP TABLE IF EXISTS tags CASCADE;
 DROP TABLE IF EXISTS cities CASCADE;
 DROP TABLE IF EXISTS shelters CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS permissions CASCADE;
 DROP TABLE IF EXISTS interest CASCADE;
 
 CREATE TABLE IF NOT EXISTS users
@@ -42,13 +41,6 @@ CREATE TABLE IF NOT EXISTS users_roles
     user_id BIGINT NOT NULL REFERENCES users (id),
     role_id BIGINT NOT NULL REFERENCES roles (id),
     PRIMARY KEY (user_id, role_id)
-);
-
-CREATE TABLE IF NOT EXISTS permissions
-(
-    role_id    BIGINT       NOT NULL REFERENCES roles (id),
-    permission VARCHAR(100) NOT NULL,
-    PRIMARY KEY (role_id, permission)
 );
 
 CREATE TABLE IF NOT EXISTS cities

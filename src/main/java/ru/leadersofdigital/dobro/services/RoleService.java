@@ -19,7 +19,6 @@ public class RoleService {
         return roleRepository.getRolesByStatusGreaterThanEqual(ModerateStatus.APPROVE.ordinal());
     }
 
-
     public Role findById(Long id) {
         return roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("NotFound role id " + id));
     }

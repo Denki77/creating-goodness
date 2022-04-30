@@ -11,8 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +19,7 @@ import ru.leadersofdigital.dobro.dto.DreamDto;
 import ru.leadersofdigital.dobro.errorHandling.InvalidDataException;
 import ru.leadersofdigital.dobro.errorHandling.ResourceNotFoundException;
 import ru.leadersofdigital.dobro.models.Dream;
-import ru.leadersofdigital.dobro.models.Token;
+import ru.leadersofdigital.dobro.services.AuthenticationFacade;
 import ru.leadersofdigital.dobro.services.DreamService;
 import ru.leadersofdigital.dobro.services.ProfileService;
 
@@ -37,6 +35,7 @@ import java.util.stream.Collectors;
 public class DreamController {
     private final DreamService dreamService;
     private final ProfileService profileService;
+    private final AuthenticationFacade authenticationFacade;
 
     @Operation(summary = "Gets all dreams", tags = "Dream")
     @ApiResponses(value = {
@@ -66,33 +65,37 @@ public class DreamController {
     }
 
     @Operation(summary = "Get dreams per pages", tags = "Dream")
-    @GetMapping("/edit")
+    @GetMapping("/user/{user_id}")
     public Page<DreamDto> getAllOwnDreams(
+            @PathVariable Long user_id,
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "count", defaultValue = "10") int count
     ) {
-        Long profileId = this.getProfileIdByAuthenticate();
+        Long profileId = authenticationFacade.getUserId();
         Page<Dream> dreamsPage = dreamService.findPage(page - 1, count, profileId);
         return new PageImpl<>(dreamsPage.getContent().stream().map(DreamDto::new).collect(Collectors.toList()), dreamsPage.getPageable(), dreamsPage.getTotalElements());
     }
 
     @Operation(summary = "Get one dream by id", tags = "Dream")
     @GetMapping("/edit/{id}")
-    public DreamDto getOneOwnDreamById(@PathVariable Long id, HttpServletResponse httpResponse) throws IOException {
+    public DreamDto getOneOwnDreamById(
+            @PathVariable Long id,
+            HttpServletResponse httpResponse
+    ) throws IOException {
         // find owner of dream
         Long ownerId = dreamService.findById(id).orElseThrow().getProfile().getId();
-        if (!Objects.equals(ownerId, this.getUserIdByAuthenticate())) {
+        if (!Objects.equals(ownerId, authenticationFacade.getUserId())) {
             httpResponse.sendError(403);
             httpResponse.sendRedirect("/");
             return new DreamDto();
         }
-        Long profileId = this.getProfileIdByAuthenticate();
+        Long profileId = authenticationFacade.getUserId();
         Dream dream = dreamService.findByIdAndProfileId(id, profileId).orElseThrow(() -> new ResourceNotFoundException("Dream doesn't exists id: " + id));
         return new DreamDto(dream);
     }
 
     @Operation(summary = "Create new dream", tags = "Dream")
-    @PostMapping("/edit")
+    @PostMapping
     public DreamDto createNewDream(@RequestBody @Validated DreamDto DreamDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InvalidDataException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
@@ -101,8 +104,8 @@ public class DreamController {
     }
 
     @Operation(summary = "Update dream", tags = "Dream")
-    @PutMapping("/edit")
-    public DreamDto updateDream(@RequestBody DreamDto DreamDto, BindingResult bindingResult) {
+    @PutMapping("/{id}")
+    public DreamDto updateDream(@PathVariable Long id, @RequestBody DreamDto DreamDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InvalidDataException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
         }
@@ -110,18 +113,8 @@ public class DreamController {
     }
 
     @Operation(summary = "Deletez dream by id", tags = "Dream")
-    @DeleteMapping("/edit/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         dreamService.deleteById(id);
-    }
-
-    private Long getProfileIdByAuthenticate() {
-        return profileService.getProfileDtoByUserId(this.getUserIdByAuthenticate()).getUserId();
-    }
-
-    private Long getUserIdByAuthenticate() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Token token = (Token) authentication.getDetails();
-        return token.getUserId();
     }
 }
