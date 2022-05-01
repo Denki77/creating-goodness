@@ -132,7 +132,7 @@ Vue.component('modal-registration', {
         '            <div class="form-group mb-3 row">\n' +
         '\t\t\t\t<label class="form-label col-3 col-form-label">Email</label>\n' +
         '\t\t\t\t<div class="col">\n' +
-        '\t\t\t\t\t<input type="text" class="form-control mb-2" v-bind:class="{ \'is-invalid\' : invalid.email}" v-model="form.email" placeholder="simple@mail.ru">\n' +
+        '\t\t\t\t\t<input type="text" class="form-control mb-2" v-bind:class="{ \'is-invalid\' : invalid.email}" v-model="form.email" placeholder="simple@mail.digital">\n' +
         '\t\t\t\t</div>\n' +
         '            </div>\n' +
         '            <div class="form-group mb-3 row">\n' +

@@ -21,18 +21,6 @@ VALUES (1, 1),
        (5, 5),
        (6, 5);
 
-INSERT INTO permissions
-    (role_id, permission)
-VALUES (1, 'role_absolute'),
-       (2, 'role_edit_profile'),
-       (2, 'role_get_pupil_profile'),
-       (3, 'role_edit_profile'),
-       (3, 'role_get_pupil_profile'),
-       (4, 'role_edit_profile'),
-       (4, 'role_add_pupil_profile'),
-       (4, 'role_get_pupil_profile'),
-       (4, 'role_edit_pupil_profile');
-
 INSERT INTO cities (names, lat, lng)
 VALUES ('Алейск', '51.9581028', '85.9603235'),
        ('Белокуриха', '51.9581028', '85.9603235'),

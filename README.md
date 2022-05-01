@@ -28,9 +28,9 @@ Swagger: http://88888888.digital/swagger-ui/index.html?configUrl=/v3/api-docs/sw
 РАЗРАБОТЧИКИ:
 ------------
 
-- Денис Фоменков tgimrv@ya.ru
+- Денис Фоменков tgimrv@ya.digital
 - Роман Шафиков machanics@gmail.com
 - Игорь Успенский wasporc@gmail.com
-- Никита Лупанов lupanova-2011@mail.ru
+- Никита Лупанов lupanova-2011@mail.digital
 
     
