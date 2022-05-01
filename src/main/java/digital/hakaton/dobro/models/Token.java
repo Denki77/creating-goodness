@@ -19,7 +19,10 @@ public class Token {
 
     public Token(@NotNull Claims claims) {
         this.userId = Long.valueOf((String) claims.get("user_id"));
-        this.roles = getClaimsValue(claims, (Function<Claims, List<String>>) c -> c.get("roles", List.class));
+        this.roles = getClaimsValue(
+                claims,
+                (Function<Claims, List<String>>) c -> c.get("roles", List.class)
+        );
         this.email = claims.getSubject();
         this.expiredDate = claims.getExpiration();
     }

@@ -29,7 +29,7 @@ public class JwtTokenUtil {
         return generateToken(
                 user.getEmail(),
                 user.getId().toString(),
-                user.getRoles().stream().map(Role::getName).collect(Collectors.toList())
+                user.getRoles().stream().map(Role::getCode).collect(Collectors.toList())
         );
     }
 
