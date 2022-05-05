@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/profile**").authenticated()
                 .antMatchers("/api/v1/dream/edit**").authenticated()
                 .antMatchers("/api/v1/user**").authenticated()
-                .antMatchers("/api/v1/user/all**").hasRole("ADMIN")
+                .antMatchers("/api/v1/user/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/user/register").permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
